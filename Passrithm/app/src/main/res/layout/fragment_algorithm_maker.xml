@@ -22,7 +22,7 @@
         android:id="@+id/algomake_result_result_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="결과"
+        android:text="@string/password_result"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -40,10 +40,9 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:layout_alignRight="@id/algomake_result_background"
+        android:layout_toRightOf="@id/algomake_result_result_tv"
         android:layout_alignTop="@id/algomake_result_background"
         android:layout_alignBottom="@id/algomake_result_background"
-        android:layout_marginEnd="20dp"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -73,7 +72,7 @@
         android:id="@+id/algomake_save_tv"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:text="저장"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:gravity="center"
         android:textStyle="bold"
