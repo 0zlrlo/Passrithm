@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/algorithm_maker_main_frm"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -88,7 +89,6 @@
         android:layout_height="0dp"
         android:layout_below="@id/algomake_box_tv"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
         android:background="@color/one_level_gray"
         tools:listitem="@layout/item_algorithm_box"/>
 
@@ -100,7 +100,6 @@
         android:layout_height="0dp"
         android:layout_below="@id/algomake_box_tv"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
         android:layout_marginStart="10dp"
         android:background="@color/one_level_gray"
         tools:listitem="@layout/item_algorithm_box">
