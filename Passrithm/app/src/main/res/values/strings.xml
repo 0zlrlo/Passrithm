@@ -10,4 +10,7 @@
     <string name="big_letter">대문자 넣기</string>
     <string name="ask_big_letter">몇번째 글자를 대문자로\n수정하시겠습니까?</string>
     <string name="modify_direct">직접 수정하기</string>
+    <string name="save_excel">엑셀 파일로 저장</string>
+    <string name="save_txt">txt 파일로 저장</string>
+    <string name="save_image">이미지 파일로 저장</string>
 </resources>
