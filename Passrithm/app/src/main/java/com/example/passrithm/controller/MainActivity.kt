@@ -1,4 +1,4 @@
-package com.example.passrithm
+package com.example.passrithm.controller
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.passrithm.R
 import com.example.passrithm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
