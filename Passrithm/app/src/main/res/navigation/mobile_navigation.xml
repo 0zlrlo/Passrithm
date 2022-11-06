@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_algorithm"
-        android:name="com.example.passrithm.ui.dashboard.DashboardFragment"
+        android:name="com.example.passrithm.controller.algoritmlist.AlgorithmListFragment"
         android:label="@string/title_algorithm"
         tools:layout="@layout/fragment_algorithm_list" />
 
