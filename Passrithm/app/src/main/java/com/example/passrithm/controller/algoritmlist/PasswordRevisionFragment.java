@@ -12,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.passrithm.R;
-import com.example.passrithm.controller.MainActivity;
 
-public class AlgorithmMakeFragment extends Fragment {
+public class PasswordRevisionFragment extends Fragment {
     TextView saveButton;
+
     AlgorithmGeneratorActivity algorithmGeneratorActivity;
 
     @Override
@@ -27,13 +27,13 @@ public class AlgorithmMakeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_maker , container, false);
-        saveButton = rootView.findViewById(R.id.algomake_save_tv);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_password_revision , container, false);
+        saveButton = rootView.findViewById(R.id.last_revision_save_tv);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                algorithmGeneratorActivity.setFragment("passwordRevision");
+                algorithmGeneratorActivity.finish();
             }
         });
         return rootView;

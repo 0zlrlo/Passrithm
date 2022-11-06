@@ -9,6 +9,7 @@ import com.example.passrithm.databinding.ActivityAlgorithmGeneratorBinding;
 
 public class AlgorithmGeneratorActivity extends AppCompatActivity {
     private ActivityAlgorithmGeneratorBinding binding;
+    FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +18,23 @@ public class AlgorithmGeneratorActivity extends AppCompatActivity {
         binding = ActivityAlgorithmGeneratorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setFragment();
+        setFragment("algorithmMake");
     }
 
-    public void setFragment(){    // 데이터를 받아 나타내는 것이 아니므로 controller에 있는게 맞다고 생각함.
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    public void setFragment(String fragment){    // ui를 관리하는 view로 가야함.
+        transaction = getSupportFragmentManager().beginTransaction();
         AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
+        PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
 
-        transaction.replace(R.id.algorithm_generator_main_frm, algorithmMakeFragment);
+        switch (fragment){
+            case "algorithmMake" :
+                transaction.replace(R.id.algorithm_generator_main_frm, algorithmMakeFragment);
+                break;
+            case "passwordRevision" :
+                transaction.replace(R.id.algorithm_generator_main_frm, passwordRevisionFragment);
+                transaction.addToBackStack("passwordRevision"); // stack에 저장해서 뒤로 갔을때 다시 메이커 화면으로 갈 수 있도록 함.
+                break;
+        }
         transaction.commit();
     }
 }
