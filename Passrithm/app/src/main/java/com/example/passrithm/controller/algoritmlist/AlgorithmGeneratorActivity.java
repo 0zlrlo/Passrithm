@@ -21,7 +21,7 @@ public class AlgorithmGeneratorActivity extends AppCompatActivity {
         setFragment("algorithmMake");
     }
 
-    public void setFragment(String fragment){    // ui를 관리하는 view로 가야함.
+    public void setFragment(String fragment){
         transaction = getSupportFragmentManager().beginTransaction();
         AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
         PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
