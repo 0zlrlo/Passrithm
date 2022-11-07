@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +18,9 @@ import com.example.passrithm.controller.MainActivity;
 
 public class AlgorithmMakeFragment extends Fragment {
     TextView saveButton;
+    TextView siteInput;
     AlgorithmGeneratorActivity algorithmGeneratorActivity;
+    ViewGroup rootView;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -27,8 +31,9 @@ public class AlgorithmMakeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_maker , container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_maker , container, false);
         saveButton = rootView.findViewById(R.id.algomake_save_tv);
+        siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +41,19 @@ public class AlgorithmMakeFragment extends Fragment {
                 algorithmGeneratorActivity.setFragment("passwordRevision");
             }
         });
+        siteInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSite();
+            }
+        });
         return rootView;
+    }
+
+    private void setSite(){ // view로 추후 이동예정. 이유 : 사이트 주소에 대한 데이터를 세팅해줘야함.
+        LinearLayout siteLinearLayout = rootView.findViewById(R.id.algomake_site_input);
+        EditText siteEditText = rootView.findViewById(R.id.algomake_site_input_et);
+
+        siteLinearLayout.setVisibility(View.GONE);
     }
 }
