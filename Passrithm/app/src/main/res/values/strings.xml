@@ -6,6 +6,7 @@
     <string name="test_string">테스트 스트링입니다. 나중에 삭제해주세요.</string>
     <string name="insert_site">사이트 주소를 입력해주세요.</string>
     <string name="save">저장</string>
+    <string name="confirm">확인</string>
     <string name="password_result">결과 : </string>
     <string name="big_letter">대문자 넣기</string>
     <string name="ask_big_letter">몇번째 글자를 대문자로\n수정하시겠습니까?</string>

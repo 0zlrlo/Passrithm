@@ -44,12 +44,6 @@ public class AlgorithmMakeFragment extends Fragment {
                 algorithmGeneratorActivity.setFragment("passwordRevision");
             }
         });
-//        siteInput.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setSite();
-//            }
-//        });
         return rootView;
     }
 
