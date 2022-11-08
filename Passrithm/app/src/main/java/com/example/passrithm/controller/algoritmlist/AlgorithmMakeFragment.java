@@ -1,5 +1,6 @@
 package com.example.passrithm.controller.algoritmlist;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class AlgorithmMakeFragment extends Fragment {
     TextView siteInput;
     AlgorithmGeneratorActivity algorithmGeneratorActivity;
     ViewGroup rootView;
+    AlertDialog siteInputDialog;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -35,25 +37,36 @@ public class AlgorithmMakeFragment extends Fragment {
         saveButton = rootView.findViewById(R.id.algomake_save_tv);
         siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
 
+        setSite();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 algorithmGeneratorActivity.setFragment("passwordRevision");
             }
         });
-        siteInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSite();
-            }
-        });
+//        siteInput.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setSite();
+//            }
+//        });
         return rootView;
     }
 
     private void setSite(){ // view로 추후 이동예정. 이유 : 사이트 주소에 대한 데이터를 세팅해줘야함.
-        LinearLayout siteLinearLayout = rootView.findViewById(R.id.algomake_site_input);
-        EditText siteEditText = rootView.findViewById(R.id.algomake_site_input_et);
+        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
+        View siteInputView = LayoutInflater.from(algorithmGeneratorActivity).inflate(R.layout.dialog_algomake_site, null);
+        TextView siteInputBotton = siteInputView.findViewById(R.id.algomake_site_input_bt);
+        builder.setView(siteInputView)
+                .setCancelable(false);
 
-        siteLinearLayout.setVisibility(View.GONE);
+        siteInputDialog = builder.create();
+        siteInputBotton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                siteInputDialog.dismiss(); // 추후 사이트 주소 디비에 추가
+            }
+        });
+        siteInputDialog.show();
     }
 }
