@@ -35,6 +35,7 @@
         </activity>
         <activity android:name=".controller.base.LoginActivity"/>
         <activity android:name=".controller.base.SignupActivity"/>
+        <activity android:name=".controller.MainActivity"/>
     </application>
 
 </manifest>
