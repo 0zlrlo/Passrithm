@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"> <!--tools:context=".~"-->
+    android:layout_height="match_parent"
+    tools:context=".controller.base.LoginActivity">
     <TextView
         android:id="@+id/tv_logintitle"
         android:layout_width="wrap_content"
@@ -74,25 +75,26 @@
         android:text="Login"
         app:layout_constraintTop_toBottomOf="@id/cb_login" />
 
-    <TextView
-        android:id="@+id/tv_wantsingup"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="4dp"
-        android:text="회원가입   |"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        tools:layout_editor_absoluteX="131dp" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btn_login">
 
     <TextView
-        android:id="@+id/tv_wantpassfind"
+        android:id="@+id/tv_wantsignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:text="비밀번호 찾기"
-        app:layout_constraintStart_toEndOf="@id/tv_wantsingup"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        tools:layout_editor_absoluteY="377dp" />
+        android:layout_weight="1"
+        android:layout_marginStart="130dp"
+        android:text="회원가입   |"/>
+
+        <TextView
+            android:id="@+id/tv_wantpassfind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="   비밀번호 찾기" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
