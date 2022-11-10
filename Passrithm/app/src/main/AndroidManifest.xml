@@ -20,7 +20,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".controller.MainActivity"
+            android:name=".controller.base.LogoActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -33,6 +33,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".controller.base.LoginActivity"/>
+        <activity android:name=".controller.base.SignupActivity"/>
+        <activity android:name=".controller.MainActivity"/>
     </application>
 
 </manifest>
