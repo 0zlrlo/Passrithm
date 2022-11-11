@@ -43,7 +43,10 @@ TextView exportButton;
         exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.FragmentChange("export");
+//                mainActivity.FragmentChange("export");
+                Intent intent = new Intent(getActivity(), ExportActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
             }
         });
         return view;
