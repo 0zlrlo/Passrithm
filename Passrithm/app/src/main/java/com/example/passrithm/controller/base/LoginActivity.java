@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.MainActivity;
+import com.example.passrithm.controller.pwlist.PinSettingActivity;
 
 public class LoginActivity extends AppCompatActivity {
     @Override

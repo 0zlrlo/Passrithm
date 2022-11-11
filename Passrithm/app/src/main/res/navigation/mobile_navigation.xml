@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_password"
-        android:name="com.example.passrithm.ui.home.HomeFragment"
+        android:name="com.example.passrithm.controller.pwlist.PasswordListFragment"
         android:label="@string/title_password"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/fragment_password_list"/>
 
     <fragment
         android:id="@+id/navigation_algorithm"
