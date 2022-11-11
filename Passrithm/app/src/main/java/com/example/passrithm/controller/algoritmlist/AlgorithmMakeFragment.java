@@ -33,9 +33,8 @@ public class AlgorithmMakeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_maker , container, false);
-        saveButton = rootView.findViewById(R.id.algomake_save_tv);
-        siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_maker, container, false);
+        variableInitialization();
 
         setSite();
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -44,16 +43,10 @@ public class AlgorithmMakeFragment extends Fragment {
                 algorithmGeneratorActivity.setFragment("passwordRevision");
             }
         });
-//        siteInput.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setSite();
-//            }
-//        });
         return rootView;
     }
 
-    private void setSite(){ // view로 추후 이동예정. 이유 : 사이트 주소에 대한 데이터를 세팅해줘야함.
+    private void setSite() { // view로 추후 이동예정. 이유 : 사이트 주소에 대한 데이터를 세팅해줘야함.
         AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
         View siteInputView = LayoutInflater.from(algorithmGeneratorActivity).inflate(R.layout.dialog_algomake_site, null);
         TextView siteInputBotton = siteInputView.findViewById(R.id.algomake_site_input_bt);
@@ -68,5 +61,10 @@ public class AlgorithmMakeFragment extends Fragment {
             }
         });
         siteInputDialog.show();
+    }
+
+    private void variableInitialization() {
+        saveButton = rootView.findViewById(R.id.algomake_save_tv);
+        siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
     }
 }

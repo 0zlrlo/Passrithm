@@ -24,8 +24,8 @@
             android:id="@+id/algomake_site_input_bt"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:text="입력"
+            android:text="@string/confirm"
             android:gravity="center"
-            android:background="@color/insert_box_red"/>
+            android:background="@drawable/insert_box"/>
     </LinearLayout>
 </LinearLayout>

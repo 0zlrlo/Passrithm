@@ -18,12 +18,13 @@ import com.example.passrithm.databinding.FragmentAlgorithmListBinding;
 
 public class AlgorithmListFragment extends Fragment {
     ImageView plusButton;
+    ViewGroup rootView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_list , container, false);
-        plusButton = rootView.findViewById(R.id.algorithm_list_plus_iv);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_algorithm_list, container, false);
+        variableInitialization();
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,5 +35,9 @@ public class AlgorithmListFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void variableInitialization() {
+        plusButton = rootView.findViewById(R.id.algorithm_list_plus_iv);
     }
 }

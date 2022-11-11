@@ -38,4 +38,3 @@ public class AlgorithmGeneratorActivity extends AppCompatActivity {
         transaction.commit();
     }
 }
-
