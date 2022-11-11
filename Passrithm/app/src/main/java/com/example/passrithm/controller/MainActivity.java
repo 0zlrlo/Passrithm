@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch(fragment){
             case "export":
-            transaction.replace(R.id.password_list_main_frm, exportFragment);
+            transaction.replace(R.id.nav_host_fragment_activity_main, exportFragment);
                 break;
             case "password_lock":
-                transaction.replace(R.id.password_list_main_frm,passwordLockFragment);
+                transaction.replace(R.id.nav_host_fragment_activity_main,passwordLockFragment);
                 transaction.remove(passwordListFragment);
                 break;
             case "password_list":
-                transaction.replace(R.id.password_list_main_frm,passwordListFragment);
+                transaction.replace(R.id.nav_host_fragment_activity_main,passwordListFragment);
                 break;
 
         }

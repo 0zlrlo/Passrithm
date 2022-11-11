@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:paddingLeft="50dp"
-    android:id="@+id/export_frm">
+    android:id="@+id/export_frm"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"

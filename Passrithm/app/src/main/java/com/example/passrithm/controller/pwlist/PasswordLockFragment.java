@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +22,7 @@ import com.example.passrithm.controller.MainActivity;
 
 public class PasswordLockFragment extends Fragment {
     MainActivity mainActivity;
-    ImageButton lockButton;
+    ImageView lockButton;
     FragmentTransaction transaction;
 
     @Override
