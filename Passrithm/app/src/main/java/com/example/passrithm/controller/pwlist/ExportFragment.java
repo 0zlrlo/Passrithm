@@ -16,7 +16,6 @@ import com.example.passrithm.controller.algoritmlist.AlgorithmGeneratorActivity;
 
 public class ExportFragment extends Fragment {
 
-    PasswordShowActivity passwordShowActivity;
     ViewGroup rootView;
 
 
