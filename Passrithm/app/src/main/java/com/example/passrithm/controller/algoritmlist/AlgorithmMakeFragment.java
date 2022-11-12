@@ -29,15 +29,19 @@ import java.util.Random;
 public class AlgorithmMakeFragment extends Fragment {
     private TextView saveButton;
     private TextView siteInput;
+    private TextView resultBox;
+    private String result = "";
+    private String siteDomain;
     private AlgorithmGeneratorActivity algorithmGeneratorActivity;
     private ViewGroup rootView;
     private AlertDialog siteInputDialog;
     private AlertDialog algoBoxDialog;
+    private SelectedBoxRVAdapter selectedBoxRVAdapter;
     private List<SelectedBox> selectedBoxes = new ArrayList<>();
     private List<AlgorithmBox> algorithmBoxes = Arrays.asList(
             new AlgorithmBox(0, "사이트 도메인", "사이트주소의 이름이 들어갑니다. (글자수 선택 가능)", "예시) https://passrithm.com -> pa", true, "몇 글자를 넣을건지 선택해주세요"),
             new AlgorithmBox(1, "키워드(0~5자)", "키워드가 그대로 들어갑니다.", "예시) min -> min", true, "0~5자 이내의 키워드를 입력해주세요.\n예시) hong"),
-            new AlgorithmBox(2, "문자열", "원하는 문자열이 그대로 들어갑니다.", "예시) helloWorld -> helloWorld", true, "0~10자 이내의 문자열을 입력해주세요."),
+            new AlgorithmBox(2, "숫자", "원하는 숫자가 그대로 들어갑니다.", "예시) 021131 -> 021131", true, "숫자을 입력해주세요."),
             new AlgorithmBox(3, "랜덤 문자열", "문자열 길이 지정 시 랜덤으로 문자열이 생성되어 들어갑니다. (글자수 선택 가능)", "예시) as12k9wdk -> as12k9wdk", true, "숫자를 입력해주세요.")
     );
 
@@ -61,7 +65,9 @@ public class AlgorithmMakeFragment extends Fragment {
             }
         });
 
-        SelectedBoxRVAdapter selectedBoxRVAdapter;
+        selectedBoxRVAdapter = new SelectedBoxRVAdapter(requireContext(), selectedBoxes);
+        RecyclerView selectedBox = rootView.findViewById(R.id.algomake_chosen_algorithm_rc);
+        selectedBox.setAdapter(selectedBoxRVAdapter);
 
         AlgorithmBoxRVAdapter algorithmBoxRVAdapter = new AlgorithmBoxRVAdapter(requireContext(), algorithmBoxes, new AlgorithmBoxRVAdapter.OnItemClickListener() {
             @Override
@@ -87,7 +93,11 @@ public class AlgorithmMakeFragment extends Fragment {
         siteInputBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                siteInputDialog.dismiss(); // 추후 사이트 주소 디비에 추가
+                EditText editText = siteInputView.findViewById(R.id.algomake_site_input_et);
+                siteDomain = editText.getText().toString();
+                if (!siteDomain.equals("")) {
+                    siteInputDialog.dismiss();
+                }
             }
         });
         siteInputDialog.show();
@@ -96,6 +106,8 @@ public class AlgorithmMakeFragment extends Fragment {
     private void variableInitialization() {
         saveButton = rootView.findViewById(R.id.algomake_save_tv);
         siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
+        resultBox = rootView.findViewById(R.id.algomake_result_string_tv);
+        resultBox.setText(result);
     }
 
     void showPopUp(int algoId) {
@@ -115,7 +127,7 @@ public class AlgorithmMakeFragment extends Fragment {
 
         name.setText(algorithmBoxes.get(algoId).name);
         explain.setText(algorithmBoxes.get(algoId).explain);
-        if (algoId == 0 || algoId == 3) {
+        if (algoId == 0 || algoId == 2 || algoId == 3) {
             editText.setInputType(TYPE_CLASS_NUMBER);
         }
         algoBoxDialog.show();
@@ -123,28 +135,41 @@ public class AlgorithmMakeFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int targetStringLength = 0;
                 if (algoId == 0) {
+                    targetStringLength = Integer.parseInt(editText.getText().toString());
+                    String subSiteDomain = siteDomain.substring(0, targetStringLength);
+                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain));
+
+                    result += subSiteDomain;
+                    resultBox.setText(result);
                 }
 
                 if (algoId == 1 || algoId == 2) {
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, editText.getText().toString()));
+                    result += editText.getText().toString();
+                    resultBox.setText(result);
                 }
 
                 if (algoId == 3) {
                     Random random = new Random();
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
-                    int targetStringLength = Integer.parseInt(editText.getText().toString());
+                    int targetRandomLength = Integer.parseInt(editText.getText().toString());
                     String generatedString = random.ints(leftLimit,rightLimit + 1)
                             .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                            .limit(targetStringLength)
+                            .limit(targetRandomLength)
                             .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                             .toString();
 
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString));
+                    result += generatedString;
+                    resultBox.setText(result);
                 }
-//                VarUtil.glob.chosenBoxRVAdapter.notifyDataSetChanged()
-                algoBoxDialog.dismiss();
+                selectedBoxRVAdapter.notifyDataSetChanged();
+                if (!editText.getText().toString().equals("") && targetStringLength <= siteDomain.length()) {
+                    algoBoxDialog.dismiss();
+                }
             }
         });
     }
