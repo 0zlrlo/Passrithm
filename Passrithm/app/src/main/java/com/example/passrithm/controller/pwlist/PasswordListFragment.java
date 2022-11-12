@@ -23,6 +23,7 @@ import com.example.passrithm.controller.base.LoginActivity;
 public class PasswordListFragment extends Fragment {
 TextView exportButton;
   MainActivity mainActivity;
+  ImageView lockButton;
   private View view;
 
     @Override
@@ -47,6 +48,15 @@ TextView exportButton;
                 Intent intent = new Intent(getActivity(), ExportActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+            }
+        });
+        lockButton = view.findViewById(R.id.password_lock);
+        lockButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(lockButton.getVisibility()==view.VISIBLE){
+                    lockButton.setVisibility(view.GONE);
+                }
             }
         });
         return view;

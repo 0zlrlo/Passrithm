@@ -1,23 +1,16 @@
 package com.example.passrithm.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.passrithm.R;
-import com.example.passrithm.controller.algoritmlist.AlgorithmGeneratorActivity;
-import com.example.passrithm.controller.base.LoginActivity;
-import com.example.passrithm.controller.pwlist.ExportFragment;
-import com.example.passrithm.controller.pwlist.PasswordListFragment;
-import com.example.passrithm.controller.pwlist.PasswordLockFragment;
 import com.example.passrithm.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -67,20 +60,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-       FragmentChange("password_lock");
+
     }
-    FragmentTransaction transaction;
+    /*FragmentTransaction transaction;
     public void FragmentChange(String fragment){
         transaction = getSupportFragmentManager().beginTransaction();
 
-        ExportFragment exportFragment = new ExportFragment();
-        PasswordLockFragment passwordLockFragment = new PasswordLockFragment();
+
         PasswordListFragment passwordListFragment = new PasswordListFragment();
 
 
         switch(fragment){
             case "password_lock":
-                transaction.replace(R.id.password_list_main_frm,passwordLockFragment);
+
                 transaction.remove(passwordListFragment);
                 break;
             case "password_list":
@@ -90,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
+}*/
+
 }
-
-
 class User {
     int user_id;
     String name;
