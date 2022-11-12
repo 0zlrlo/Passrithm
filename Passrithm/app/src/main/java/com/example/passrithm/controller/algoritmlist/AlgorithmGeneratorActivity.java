@@ -9,6 +9,7 @@ import com.example.passrithm.databinding.ActivityAlgorithmGeneratorBinding;
 
 public class AlgorithmGeneratorActivity extends AppCompatActivity {
     private ActivityAlgorithmGeneratorBinding binding;
+    String result = "";
     FragmentTransaction transaction;
 
     @Override

@@ -30,7 +30,6 @@ public class AlgorithmMakeFragment extends Fragment {
     private TextView saveButton;
     private TextView siteInput;
     private TextView resultBox;
-    private String result = "";
     private String siteDomain;
     private AlgorithmGeneratorActivity algorithmGeneratorActivity;
     private ViewGroup rootView;
@@ -42,7 +41,9 @@ public class AlgorithmMakeFragment extends Fragment {
             new AlgorithmBox(0, "사이트 도메인", "사이트주소의 이름이 들어갑니다. (글자수 선택 가능)", "예시) https://passrithm.com -> pa", true, "몇 글자를 넣을건지 선택해주세요"),
             new AlgorithmBox(1, "키워드(0~5자)", "키워드가 그대로 들어갑니다.", "예시) min -> min", true, "0~5자 이내의 키워드를 입력해주세요.\n예시) hong"),
             new AlgorithmBox(2, "숫자", "원하는 숫자가 그대로 들어갑니다.", "예시) 021131 -> 021131", true, "숫자을 입력해주세요."),
-            new AlgorithmBox(3, "랜덤 문자열", "문자열 길이 지정 시 랜덤으로 문자열이 생성되어 들어갑니다. (글자수 선택 가능)", "예시) as12k9wdk -> as12k9wdk", true, "숫자를 입력해주세요.")
+            new AlgorithmBox(3, "랜덤 문자열", "문자열 길이 지정 시 랜덤으로 문자열이 생성되어 들어갑니다. (글자수 선택 가능)", "예시) as12k9wdk -> as12k9wdk", true, "숫자를 입력해주세요."),
+            new AlgorithmBox(4, "특수 문자", "특수문자 '!, @, #, $, ?,%, ^, &, *' 중에서 선택해주세요.", "", true, "특수문자를 선택해주세요."),
+            new AlgorithmBox(5, "for문 블록", "원하는 만큼 선택된 블럭을 반복할 수 있습니다.", "예시) for문 2번 - (사이트도메인 + 키워드), \n사이트도메인 키워드 사이트도메인 키워드", true, "몇번 반복하시겠습니까?")
     );
 
     @Override
@@ -107,7 +108,7 @@ public class AlgorithmMakeFragment extends Fragment {
         saveButton = rootView.findViewById(R.id.algomake_save_tv);
         siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
         resultBox = rootView.findViewById(R.id.algomake_result_string_tv);
-        resultBox.setText(result);
+        resultBox.setText(algorithmGeneratorActivity.result);
     }
 
     void showPopUp(int algoId) {
@@ -141,14 +142,14 @@ public class AlgorithmMakeFragment extends Fragment {
                     String subSiteDomain = siteDomain.substring(0, targetStringLength);
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain));
 
-                    result += subSiteDomain;
-                    resultBox.setText(result);
+                    algorithmGeneratorActivity.result += subSiteDomain;
+                    resultBox.setText(algorithmGeneratorActivity.result);
                 }
 
                 if (algoId == 1 || algoId == 2) {
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, editText.getText().toString()));
-                    result += editText.getText().toString();
-                    resultBox.setText(result);
+                    algorithmGeneratorActivity.result += editText.getText().toString();
+                    resultBox.setText(algorithmGeneratorActivity.result);
                 }
 
                 if (algoId == 3) {
@@ -163,8 +164,8 @@ public class AlgorithmMakeFragment extends Fragment {
                             .toString();
 
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString));
-                    result += generatedString;
-                    resultBox.setText(result);
+                    algorithmGeneratorActivity.result += generatedString;
+                    resultBox.setText(algorithmGeneratorActivity.result);
                 }
                 selectedBoxRVAdapter.notifyDataSetChanged();
                 if (!editText.getText().toString().equals("") && targetStringLength <= siteDomain.length()) {
