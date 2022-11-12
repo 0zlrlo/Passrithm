@@ -20,6 +20,7 @@ public class PasswordRevisionFragment extends Fragment {
     TextView directRevisionButton;
     LinearLayout bigLetterBox;
     ViewGroup rootView;
+    TextView resultBox;
 
     AlgorithmGeneratorActivity algorithmGeneratorActivity;
 
@@ -34,6 +35,7 @@ public class PasswordRevisionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_password_revision , container, false);
         variableInitialization();
+        resultBox.setText(algorithmGeneratorActivity.result);
         
         bigLetterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,5 +66,6 @@ public class PasswordRevisionFragment extends Fragment {
         bigLetterButton = rootView.findViewById(R.id.last_revision_big_letter_tv);
         directRevisionButton = rootView.findViewById(R.id.last_revision_modify_direct_tv);
         bigLetterBox = rootView.findViewById(R.id.last_revision_big_letter_box);
+        resultBox = rootView.findViewById(R.id.last_revision_result_string_tv);
     }
 }
