@@ -119,7 +119,7 @@ public class AlgorithmMakeFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
         View mDialogView = LayoutInflater.from(algorithmGeneratorActivity).inflate(R.layout.dialog_algorithm_box, null);
         builder.setView(mDialogView)
-                .setCancelable(false);
+                .setCancelable(true);
         algoBoxDialog = builder.create();
         EditText editText = mDialogView.findViewById(R.id.dialog_input_et);
         TextView name = mDialogView.findViewById(R.id.dialog_name_tv);
@@ -137,8 +137,9 @@ public class AlgorithmMakeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int targetStringLength = 0;
+                String inputData = editText.getText().toString();
                 if (algoId == 0) {
-                    targetStringLength = Integer.parseInt(editText.getText().toString());
+                    targetStringLength = Integer.parseInt(inputData);
                     String subSiteDomain = siteDomain.substring(0, targetStringLength);
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain));
 
@@ -147,8 +148,10 @@ public class AlgorithmMakeFragment extends Fragment {
                 }
 
                 if (algoId == 1 || algoId == 2) {
-                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, editText.getText().toString()));
-                    algorithmGeneratorActivity.result += editText.getText().toString();
+                    if (!inputData.equals("")) {
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, inputData));
+                    }
+                    algorithmGeneratorActivity.result += inputData;
                     resultBox.setText(algorithmGeneratorActivity.result);
                 }
 
@@ -156,19 +159,21 @@ public class AlgorithmMakeFragment extends Fragment {
                     Random random = new Random();
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
-                    int targetRandomLength = Integer.parseInt(editText.getText().toString());
+                    int targetRandomLength = Integer.parseInt(inputData);
                     String generatedString = random.ints(leftLimit,rightLimit + 1)
                             .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                             .limit(targetRandomLength)
                             .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                             .toString();
 
-                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString));
+                    if (!inputData.equals("")) {
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString));
+                    }
                     algorithmGeneratorActivity.result += generatedString;
                     resultBox.setText(algorithmGeneratorActivity.result);
                 }
                 selectedBoxRVAdapter.notifyDataSetChanged();
-                if (!editText.getText().toString().equals("") && targetStringLength <= siteDomain.length()) {
+                if (!inputData.equals("") && targetStringLength <= siteDomain.length()) {
                     algoBoxDialog.dismiss();
                 }
             }
