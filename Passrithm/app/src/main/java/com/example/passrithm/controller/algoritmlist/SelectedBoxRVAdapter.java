@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
@@ -15,12 +16,28 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class SelectedBoxRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SelectedBoxRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperCallback.ItemTouchHelperListener {
 
     private List<SelectedBox> BoxList;
 
     public SelectedBoxRVAdapter(Context requireContext, List<SelectedBox> selectedBoxes) {
         this.BoxList = selectedBoxes;
+    }
+
+    @Override
+    public boolean onItemMove(int form_position, int to_position) {
+        SelectedBox item = BoxList.get(form_position);
+        BoxList.remove(form_position);
+        BoxList.add(to_position, item);
+//        item.setNumber(to_position);
+        notifyItemMoved(form_position, to_position);
+        return true;
+    }
+
+    @Override
+    public void onItemSwipe(int position) {
+        BoxList.remove(position);
+        notifyItemRemoved(position);
     }
 
     public class SelectedBoxViewHolder extends RecyclerView.ViewHolder {

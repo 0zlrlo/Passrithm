@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
@@ -73,6 +74,9 @@ public class AlgorithmMakeFragment extends Fragment {
         selectedBoxRVAdapter = new SelectedBoxRVAdapter(requireContext(), selectedBoxes);
         RecyclerView selectedBox = rootView.findViewById(R.id.algomake_chosen_algorithm_rc);
         selectedBox.setAdapter(selectedBoxRVAdapter);
+
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(selectedBoxRVAdapter));
+        mItemTouchHelper.attachToRecyclerView(selectedBox);
 
         AlgorithmBoxRVAdapter algorithmBoxRVAdapter = new AlgorithmBoxRVAdapter(requireContext(), algorithmBoxes, new AlgorithmBoxRVAdapter.OnItemClickListener() {
             @Override
