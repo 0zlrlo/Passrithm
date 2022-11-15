@@ -2,6 +2,10 @@ package com.example.passrithm.controller.algoritmlist;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
+import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_BOTTOM_CONTENT;
+import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_TOP_CONTENT;
+import static com.example.passrithm.controller.algoritmlist.Code.ViewType.MAIN_CONTENT;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -128,7 +132,7 @@ public class AlgorithmMakeFragment extends Fragment {
 
         name.setText(algorithmBoxes.get(algoId).name);
         explain.setText(algorithmBoxes.get(algoId).explain);
-        if (algoId == 0 || algoId == 2 || algoId == 3) {
+        if (algoId == 0 || algoId == 2 || algoId == 3 || algoId == 5) {
             editText.setInputType(TYPE_CLASS_NUMBER);
         }
         algoBoxDialog.show();
@@ -141,7 +145,7 @@ public class AlgorithmMakeFragment extends Fragment {
                 if (algoId == 0) {
                     targetStringLength = Integer.parseInt(inputData);
                     String subSiteDomain = siteDomain.substring(0, targetStringLength);
-                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain));
+                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain, MAIN_CONTENT));
 
                     algorithmGeneratorActivity.result += subSiteDomain;
                     resultBox.setText(algorithmGeneratorActivity.result);
@@ -149,7 +153,7 @@ public class AlgorithmMakeFragment extends Fragment {
 
                 if (algoId == 1 || algoId == 2) {
                     if (!inputData.equals("")) {
-                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, inputData));
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, inputData, MAIN_CONTENT));
                     }
                     algorithmGeneratorActivity.result += inputData;
                     resultBox.setText(algorithmGeneratorActivity.result);
@@ -167,11 +171,19 @@ public class AlgorithmMakeFragment extends Fragment {
                             .toString();
 
                     if (!inputData.equals("")) {
-                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString));
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString, MAIN_CONTENT));
                     }
                     algorithmGeneratorActivity.result += generatedString;
                     resultBox.setText(algorithmGeneratorActivity.result);
                 }
+
+                if (algoId == 5) {
+                    String repeatCount = "for문 - " + inputData + "번 반복";
+
+                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, repeatCount, FOR_TOP_CONTENT));
+                    selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, repeatCount, FOR_BOTTOM_CONTENT));
+                }
+
                 selectedBoxRVAdapter.notifyDataSetChanged();
                 if (!inputData.equals("") && targetStringLength <= siteDomain.length()) {
                     algoBoxDialog.dismiss();

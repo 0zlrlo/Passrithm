@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-public class SelectedBoxRVAdapter extends RecyclerView.Adapter<SelectedBoxRVAdapter.SelectedBoxViewHolder> {
+public class SelectedBoxRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<SelectedBox> BoxList;
 
@@ -32,18 +34,60 @@ public class SelectedBoxRVAdapter extends RecyclerView.Adapter<SelectedBoxRVAdap
         }
     }
 
-    @NonNull
-    @Override
-    public SelectedBoxRVAdapter.SelectedBoxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chosen_algorithm, parent, false);
+    public class ForTopViewHolder extends RecyclerView.ViewHolder {
+        TextView repeatCount;
+        public ForTopViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.repeatCount = (TextView) itemView.findViewById(R.id.for_top_box_repeat_tv);
+        }
+    }
 
-        return new SelectedBoxViewHolder(view);
+    public class ForBottomViewHolder extends RecyclerView.ViewHolder {
+        public ForBottomViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SelectedBoxRVAdapter.SelectedBoxViewHolder holder, int position) {
-        holder.name.setText(BoxList.get(position).name);
-        holder.inputData.setText(BoxList.get(position).inputData);
+    public int getItemViewType(int position) {
+        return BoxList.get(position).getViewType();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if(viewType == Code.ViewType.FOR_TOP_CONTENT)
+        {
+            view = inflater.inflate(R.layout.item_for_box_top, parent, false);
+            return new ForTopViewHolder(view);
+        }
+        else if(viewType == Code.ViewType.FOR_BOTTOM_CONTENT)
+        {
+            view = inflater.inflate(R.layout.item_for_box_bottom, parent, false);
+            return new ForBottomViewHolder(view);
+        }
+        else
+        {
+            view = inflater.inflate(R.layout.item_chosen_algorithm, parent, false);
+            return new SelectedBoxViewHolder(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof ForTopViewHolder) {
+            ((ForTopViewHolder) holder).repeatCount.setText(BoxList.get(position).inputData);
+        } else if(holder instanceof ForBottomViewHolder) {
+        }
+        else
+        {
+            ((SelectedBoxViewHolder) holder).name.setText(BoxList.get(position).name);
+            ((SelectedBoxViewHolder) holder).inputData.setText(BoxList.get(position).inputData);
+        }
     }
 
     @Override
