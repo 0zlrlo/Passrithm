@@ -6,6 +6,8 @@ import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_BO
 import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_TOP_CONTENT;
 import static com.example.passrithm.controller.algoritmlist.Code.ViewType.MAIN_CONTENT;
 
+import static java.lang.Integer.parseInt;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,8 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +36,7 @@ public class AlgorithmMakeFragment extends Fragment {
     private TextView siteInput;
     private TextView resultBox;
     private String siteDomain;
+    private TextView refreshButton;
     private AlgorithmGeneratorActivity algorithmGeneratorActivity;
     private ViewGroup rootView;
     private AlertDialog siteInputDialog;
@@ -68,6 +69,14 @@ public class AlgorithmMakeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 algorithmGeneratorActivity.setFragment("passwordRevision");
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedBoxes = selectedBoxRVAdapter.getBoxList();
+                resultBox.setText(getResult(selectedBoxes));
             }
         });
 
@@ -116,7 +125,47 @@ public class AlgorithmMakeFragment extends Fragment {
         saveButton = rootView.findViewById(R.id.algomake_save_tv);
         siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
         resultBox = rootView.findViewById(R.id.algomake_result_string_tv);
+        refreshButton = rootView.findViewById(R.id.algomake_refresh_tv);
         resultBox.setText(algorithmGeneratorActivity.result);
+    }
+
+    private String getResult(List<SelectedBox> selectedBoxes) {
+        String result = "";
+        SelectedBox selectedBox;
+        for (int i = 0; i < selectedBoxes.size(); i++) {
+            selectedBox = selectedBoxes.get(i);
+            if (selectedBox.getViewType() == FOR_TOP_CONTENT) {
+                String repeat = subList(selectedBoxes, i + 1);
+                result += forBox(repeat, Integer.parseInt(selectedBox.inputData));
+                for (int j = i; j < selectedBoxes.size(); j++) {
+                    if (selectedBoxes.get(j).getViewType() != FOR_BOTTOM_CONTENT) i++;
+                }
+                i--;
+            } else {
+                result += selectedBox.inputData;
+            }
+        }
+
+        return result;
+    }
+
+    private String forBox(String selectedBoxes, Integer repeat) {
+        String result = "";
+        for (int i = 0; i < repeat; i++) {
+            result += selectedBoxes;
+        }
+        return result;
+    }
+
+    private String subList(List<SelectedBox> selectedBoxes, int start) {
+        String result = "";
+
+        for (int i = start; (i < selectedBoxes.size()) &&
+                (selectedBoxes.get(i).getViewType() != FOR_BOTTOM_CONTENT); i++) {
+            result += (selectedBoxes.get(i).inputData);
+        }
+
+        return result;
     }
 
     void showPopUp(int algoId) {
@@ -147,7 +196,7 @@ public class AlgorithmMakeFragment extends Fragment {
                 int targetStringLength = 0;
                 String inputData = editText.getText().toString();
                 if (algoId == 0) {
-                    targetStringLength = Integer.parseInt(inputData);
+                    targetStringLength = parseInt(inputData);
                     String subSiteDomain = siteDomain.substring(0, targetStringLength);
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain, MAIN_CONTENT));
 
@@ -167,7 +216,7 @@ public class AlgorithmMakeFragment extends Fragment {
                     Random random = new Random();
                     int leftLimit = 48; // numeral '0'
                     int rightLimit = 122; // letter 'z'
-                    int targetRandomLength = Integer.parseInt(inputData);
+                    int targetRandomLength = parseInt(inputData);
                     String generatedString = random.ints(leftLimit,rightLimit + 1)
                             .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                             .limit(targetRandomLength)
@@ -182,7 +231,7 @@ public class AlgorithmMakeFragment extends Fragment {
                 }
 
                 if (algoId == 5) {
-                    String repeatCount = "for문 - " + inputData + "번 반복";
+                    String repeatCount = inputData;
 
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, repeatCount, FOR_TOP_CONTENT));
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, repeatCount, FOR_BOTTOM_CONTENT));

@@ -107,6 +107,10 @@ public class SelectedBoxRVAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    public List<SelectedBox> getBoxList() {
+        return BoxList;
+    }
+
     @Override
     public int getItemCount() {
         return (null != BoxList ? BoxList.size() : 0);
