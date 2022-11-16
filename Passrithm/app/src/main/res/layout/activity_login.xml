@@ -18,24 +18,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_loginid"
+        android:id="@+id/tv_loginemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
-        android:text="ID"
+        android:text="Email"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_logintitle" />
 
     <EditText
-        android:id="@+id/et_loginid"
+        android:id="@+id/et_loginemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="아이디를 입력하세요"
-        app:layout_constraintTop_toBottomOf="@id/tv_loginid" />
+        android:hint="이메일을 입력하세요"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/tv_loginemail" />
 
     <TextView
         android:id="@+id/tv_loginpassword"
@@ -46,7 +47,7 @@
         android:text="Password"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_loginid" />
+        app:layout_constraintTop_toBottomOf="@id/et_loginemail" />
 
     <EditText
         android:id="@+id/et_loginpassword"
