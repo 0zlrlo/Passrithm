@@ -11,6 +11,8 @@ public class AlgorithmGeneratorActivity extends AppCompatActivity {
     private ActivityAlgorithmGeneratorBinding binding;
     String result = "";
     FragmentTransaction transaction;
+    AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
+    PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,6 @@ public class AlgorithmGeneratorActivity extends AppCompatActivity {
 
     public void setFragment(String fragment){
         transaction = getSupportFragmentManager().beginTransaction();
-        AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
-        PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
 
         switch (fragment){
             case "algorithmMake" :

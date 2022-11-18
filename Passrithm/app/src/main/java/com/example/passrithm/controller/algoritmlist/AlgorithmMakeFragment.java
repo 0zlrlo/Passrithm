@@ -249,4 +249,8 @@ public class AlgorithmMakeFragment extends Fragment {
             }
         });
     }
+
+    List<SelectedBox> getSelectedBoxes() {
+        return selectedBoxes;
+    }
 }
