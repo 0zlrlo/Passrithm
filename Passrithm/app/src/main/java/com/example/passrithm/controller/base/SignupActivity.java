@@ -70,8 +70,8 @@ public class SignupActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
                                 UserAccount account = new UserAccount();
-                                account.setIdtoken(firebaseUser.getUid());
                                 account.setEmailId(firebaseUser.getEmail());
+                                account.setIdtoken(firebaseUser.getUid());
                                 account.setPasswordId(strPw);
                                 //setvalue는 데이터베이스에 인서트하는 행위
                                 mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
