@@ -68,6 +68,10 @@ public class AlgorithmMakeFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectedBoxes = selectedBoxRVAdapter.getBoxList();
+                algorithmGeneratorActivity.result = getResult(selectedBoxes);
+                resultBox.setText(algorithmGeneratorActivity.result);
+
                 algorithmGeneratorActivity.setFragment("passwordRevision");
             }
         });
@@ -76,7 +80,8 @@ public class AlgorithmMakeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectedBoxes = selectedBoxRVAdapter.getBoxList();
-                resultBox.setText(getResult(selectedBoxes));
+                algorithmGeneratorActivity.result = getResult(selectedBoxes);
+                resultBox.setText(algorithmGeneratorActivity.result);
             }
         });
 
@@ -141,7 +146,7 @@ public class AlgorithmMakeFragment extends Fragment {
                     if (selectedBoxes.get(j).getViewType() != FOR_BOTTOM_CONTENT) i++;
                 }
                 i--;
-            } else {
+            } else if (selectedBox.getViewType() != FOR_BOTTOM_CONTENT) {
                 result += selectedBox.inputData;
             }
         }
