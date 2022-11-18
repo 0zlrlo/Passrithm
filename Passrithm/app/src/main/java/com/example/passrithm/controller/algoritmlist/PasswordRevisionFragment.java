@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class PasswordRevisionFragment extends Fragment {
     TextView saveButton;
     TextView bigLetterButton;
     TextView directRevisionButton;
+    TextView bigLetterChangeButton;
     LinearLayout bigLetterBox;
     ViewGroup rootView;
     TextView resultBox;
@@ -56,6 +58,27 @@ public class PasswordRevisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setBigLetterBoxVisibility(View.VISIBLE);
+            }
+        });
+        bigLetterChangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int index;
+                TextView alert = rootView.findViewById(R.id.last_revision_alert_tv);
+                EditText bigLetterEt = rootView.findViewById(R.id.last_revision_et);
+                try {
+                    index = Integer.parseInt(bigLetterEt.getText().toString()) - 1;
+                    char bigLetter = (char) (algorithmGeneratorActivity.result.charAt(index) + 'A' - 'a');
+
+                    StringBuilder stringBuilder = new StringBuilder(algorithmGeneratorActivity.result);
+                    stringBuilder.setCharAt(index, bigLetter);
+                    algorithmGeneratorActivity.result = stringBuilder.toString();
+                    resultBox.setText(algorithmGeneratorActivity.result);
+
+                    alert.setVisibility(View.INVISIBLE);
+                } catch (NumberFormatException e) {
+                    alert.setVisibility(View.VISIBLE);
+                }
             }
         });
         directRevisionButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +113,7 @@ public class PasswordRevisionFragment extends Fragment {
         directRevisionButton = rootView.findViewById(R.id.last_revision_modify_direct_tv);
         bigLetterBox = rootView.findViewById(R.id.last_revision_big_letter_box);
         resultBox = rootView.findViewById(R.id.last_revision_result_string_tv);
+        bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);
     }
 
     private void postFirebase(List<PostSelectedBox> postSelectedBoxes) {
@@ -113,6 +137,6 @@ public class PasswordRevisionFragment extends Fragment {
         }
 
         String result = String.join(" + ", name);
-        mDatabaseRef.child("Algorithm list").child(result).setValue(postSelectedBoxes);
+//        mDatabaseRef.child("Algorithm list").child(result).setValue(postSelectedBoxes);
     }
 }
