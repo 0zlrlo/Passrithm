@@ -85,6 +85,11 @@ public class PasswordRevisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setBigLetterBoxVisibility(View.GONE);
+                EditText result = rootView.findViewById(R.id.last_revision_result_string_tv);
+                result.setEnabled(true);
+
+                //키보드 올리기
+                //저장하기 구현
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
