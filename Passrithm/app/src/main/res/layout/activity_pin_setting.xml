@@ -10,7 +10,7 @@
         android:id="@+id/etInputInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PIN번호 입력"
+        android:text="PIN번호 설정"
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginBottom="20dp"/>
@@ -24,7 +24,7 @@
 
         <EditText
             android:id="@+id/passcode1"
-            android:inputType="textPassword|number"
+            android:inputType="textPassword"
             android:layout_height="30dp"
             android:gravity="center"
             android:maxLength="1"
@@ -34,10 +34,11 @@
             android:layout_weight="1"
             android:background="@drawable/circle"
             android:layout_margin="10dp">
+            <requestFocus />
         </EditText>
         <EditText
             android:id="@+id/passcode2"
-            android:inputType="textPassword|number"
+            android:inputType="textPassword"
             android:layout_height="30dp"
             android:gravity="center"
             android:maxLength="1"
@@ -50,7 +51,7 @@
         </EditText>
         <EditText
             android:id="@+id/passcode3"
-            android:inputType="textPassword|number"
+            android:inputType="textPassword"
             android:layout_height="30dp"
             android:gravity="center"
             android:maxLength="1"
@@ -60,10 +61,11 @@
             android:layout_weight="1"
             android:background="@drawable/circle"
             android:layout_margin="10dp">
+
         </EditText>
         <EditText
             android:id="@+id/passcode4"
-            android:inputType="textPassword|number"
+            android:inputType="textPassword"
             android:layout_height="30dp"
             android:gravity="center"
             android:maxLength="1"
@@ -179,11 +181,8 @@
             <TableRow>
                 <Button
                     android:backgroundTint="#FDAFC9FF"
-                    android:id="@+id/btnclear"
-                    android:text="CLEAR"
-                    android:clickable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"/>
+                    android:id="@+id/btnErase"
+                    android:text="DEL"/>
                 <Button
                     android:backgroundTint="#FDAFC9FF"
                     android:id="@+id/btn0"
@@ -195,8 +194,8 @@
                     android:layout_height="55dp"/>
                 <Button
                     android:backgroundTint="#FDAFC9FF"
-                    android:id="@+id/btnErase"
-                    android:text="DEL"
+                    android:id="@+id/btn_ok"
+                    android:text="OK"
                     />
             </TableRow>
         </TableLayout>
