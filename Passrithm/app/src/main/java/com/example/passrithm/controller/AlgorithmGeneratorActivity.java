@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.passrithm.R;
 import com.example.passrithm.controller.algorithmmaker.AlgorithmMakeFragment;
 import com.example.passrithm.controller.algorithmmaker.PasswordRevisionFragment;
+import com.example.passrithm.databinding.ActivityAlgorithmGeneratorBinding;
 
 public class AlgorithmGeneratorActivity extends AppCompatActivity {
     private ActivityAlgorithmGeneratorBinding binding;
