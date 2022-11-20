@@ -1,18 +1,19 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.passrithm.R;
-import com.example.passrithm.databinding.ActivityAlgorithmGeneratorBinding;
+import com.example.passrithm.controller.algorithmmaker.AlgorithmMakeFragment;
+import com.example.passrithm.controller.algorithmmaker.PasswordRevisionFragment;
 
 public class AlgorithmGeneratorActivity extends AppCompatActivity {
     private ActivityAlgorithmGeneratorBinding binding;
-    String result = "";
+    public String result = "";
     FragmentTransaction transaction;
-    AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
-    PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
+    public AlgorithmMakeFragment algorithmMakeFragment = new AlgorithmMakeFragment();
+    public PasswordRevisionFragment passwordRevisionFragment = new PasswordRevisionFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

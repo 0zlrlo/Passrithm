@@ -1,10 +1,10 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller.algorithmmaker;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_BOTTOM_CONTENT;
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_TOP_CONTENT;
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.MAIN_CONTENT;
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_BOTTOM_CONTENT;
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_TOP_CONTENT;
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.MAIN_CONTENT;
 
 import static java.lang.Integer.parseInt;
 
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
+import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
