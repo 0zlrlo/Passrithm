@@ -28,5 +28,4 @@ public class UserAccount {
     public String getPinId(){return pinId;}
     public void setPinId(String pinId){this.pinId=pinId;}
 
-
 }

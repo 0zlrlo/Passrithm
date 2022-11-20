@@ -64,6 +64,7 @@ public class SignupActivity extends AppCompatActivity {
         String strId = id.getText().toString();
         String strPw = pw.getText().toString();
         String strRepw = repw.getText().toString();
+        String state="false";
 
         if (strPw.equals(strRepw)) {
             //파이어베이스 auth 진행
@@ -82,7 +83,8 @@ public class SignupActivity extends AppCompatActivity {
                         mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
                             Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), PinSettingActivity.class);
-            startActivity(intent);
+                        intent.putExtra("state", "false");
+                        startActivity(intent);
 
                     }
                     else {
