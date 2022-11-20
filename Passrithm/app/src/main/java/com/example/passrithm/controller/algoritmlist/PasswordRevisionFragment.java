@@ -9,12 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.passrithm.R;
@@ -89,6 +93,11 @@ public class PasswordRevisionFragment extends Fragment {
                 result.setEnabled(true);
 
                 //키보드 올리기
+                result.setFocusableInTouchMode(true);
+                result.requestFocus();
+                InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(result,0);
+
                 //저장하기 구현
             }
         });
@@ -119,6 +128,11 @@ public class PasswordRevisionFragment extends Fragment {
         bigLetterBox = rootView.findViewById(R.id.last_revision_big_letter_box);
         resultBox = rootView.findViewById(R.id.last_revision_result_string_tv);
         bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);
+    }
+
+    void keyBordShow() {
+        Window window = algorithmGeneratorActivity.getWindow();
+        new WindowInsetsControllerCompat(window, window.getDecorView()).show(WindowInsetsCompat.Type.ime());
     }
 
     private void postFirebase(List<PostSelectedBox> postSelectedBoxes) {
