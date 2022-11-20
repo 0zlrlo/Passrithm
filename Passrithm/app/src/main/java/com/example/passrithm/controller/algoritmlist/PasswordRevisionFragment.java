@@ -34,13 +34,13 @@ public class PasswordRevisionFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth; //파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef;  //실시간 데이터베이스
     TextView saveButton;
+    TextView confirm;
     TextView bigLetterButton;
     TextView directRevisionButton;
     TextView bigLetterChangeButton;
+    EditText resultBox;
     LinearLayout bigLetterBox;
     ViewGroup rootView;
-    TextView resultBox;
-
     AlgorithmGeneratorActivity algorithmGeneratorActivity;
 
     @Override
@@ -89,18 +89,31 @@ public class PasswordRevisionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setBigLetterBoxVisibility(View.GONE);
-                EditText result = rootView.findViewById(R.id.last_revision_result_string_tv);
-                result.setEnabled(true);
+                resultBox.setEnabled(true);
 
                 //키보드 올리기
-                result.setFocusableInTouchMode(true);
-                result.requestFocus();
+                resultBox.setFocusableInTouchMode(true);
+                resultBox.requestFocus();
                 InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(result,0);
+                imm.showSoftInput(resultBox,0);
 
                 //저장하기 구현
+                confirm.setVisibility(View.VISIBLE);
             }
         });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(algorithmGeneratorActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                confirm.setVisibility(View.GONE);
+
+                algorithmGeneratorActivity.result = resultBox.getText().toString();
+                resultBox.clearFocus();
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,12 +140,8 @@ public class PasswordRevisionFragment extends Fragment {
         directRevisionButton = rootView.findViewById(R.id.last_revision_modify_direct_tv);
         bigLetterBox = rootView.findViewById(R.id.last_revision_big_letter_box);
         resultBox = rootView.findViewById(R.id.last_revision_result_string_tv);
-        bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);
-    }
-
-    void keyBordShow() {
-        Window window = algorithmGeneratorActivity.getWindow();
-        new WindowInsetsControllerCompat(window, window.getDecorView()).show(WindowInsetsCompat.Type.ime());
+        bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);                confirm = rootView.findViewById(R.id.last_revision_modify_direct_confirm_tv);
+        confirm = rootView.findViewById(R.id.last_revision_modify_direct_confirm_tv);
     }
 
     private void postFirebase(List<PostSelectedBox> postSelectedBoxes) {
