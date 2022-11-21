@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/algorithm_maker_main_frm"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,14 +37,26 @@
         android:id="@+id/algomake_result_string_tv"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="@string/test_string"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:layout_marginStart="10dp"
         android:layout_toRightOf="@id/algomake_result_result_tv"
         android:layout_alignTop="@id/algomake_result_background"
         android:layout_alignBottom="@id/algomake_result_background"
         />
+
+    <TextView
+        android:id="@+id/algomake_refresh_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="새로고침"
+        android:gravity="center"
+        android:layout_alignEnd="@id/algomake_result_background"
+        android:layout_alignTop="@id/algomake_result_background"
+        android:layout_alignBottom="@id/algomake_result_background"
+        android:layout_marginEnd="20dp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/algomake_chosen_algorithm_rc"
@@ -88,7 +101,6 @@
         android:layout_height="0dp"
         android:layout_below="@id/algomake_box_tv"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
         android:background="@color/one_level_gray"
         tools:listitem="@layout/item_algorithm_box"/>
 
@@ -100,10 +112,8 @@
         android:layout_height="0dp"
         android:layout_below="@id/algomake_box_tv"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
         android:layout_marginStart="10dp"
         android:background="@color/one_level_gray"
         tools:listitem="@layout/item_algorithm_box">
     </androidx.recyclerview.widget.RecyclerView>
-
 </RelativeLayout>

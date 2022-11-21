@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"> <!--tools:context=".~"-->
+    android:layout_height="match_parent"
+    tools:context=".controller.base.LoginActivity">
     <TextView
         android:id="@+id/tv_logintitle"
         android:layout_width="wrap_content"
@@ -17,24 +18,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_loginid"
+        android:id="@+id/tv_loginemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
-        android:text="ID"
+        android:text="Email"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_logintitle" />
 
     <EditText
-        android:id="@+id/et_loginid"
+        android:id="@+id/et_loginemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="아이디를 입력하세요"
-        app:layout_constraintTop_toBottomOf="@id/tv_loginid" />
+        android:hint="이메일을 입력하세요"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/tv_loginemail" />
 
     <TextView
         android:id="@+id/tv_loginpassword"
@@ -45,7 +47,7 @@
         android:text="Password"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_loginid" />
+        app:layout_constraintTop_toBottomOf="@id/et_loginemail" />
 
     <EditText
         android:id="@+id/et_loginpassword"
@@ -74,25 +76,26 @@
         android:text="Login"
         app:layout_constraintTop_toBottomOf="@id/cb_login" />
 
-    <TextView
-        android:id="@+id/tv_wantsingup"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="4dp"
-        android:text="회원가입   |"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        tools:layout_editor_absoluteX="131dp" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btn_login">
 
     <TextView
-        android:id="@+id/tv_wantpassfind"
+        android:id="@+id/tv_wantsignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:text="비밀번호 찾기"
-        app:layout_constraintStart_toEndOf="@id/tv_wantsingup"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        tools:layout_editor_absoluteY="377dp" />
+        android:layout_weight="1"
+        android:layout_marginStart="130dp"
+        android:text="회원가입   |"/>
+
+        <TextView
+            android:id="@+id/tv_wantpassfind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="   비밀번호 찾기" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

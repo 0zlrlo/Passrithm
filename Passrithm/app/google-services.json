@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54213189972",
+    "project_id": "passrithm-852e2",
+    "storage_bucket": "passrithm-852e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54213189972:android:9c1f30f39aa2238abb28c1",
+        "android_client_info": {
+          "package_name": "com.example.passrithm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54213189972-rcvp9ivonq0p4mjsun04dobae9mnv8fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNU2tLiLV0aGkLBIa-r3sykDgU_cUl_y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54213189972-rcvp9ivonq0p4mjsun04dobae9mnv8fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
