@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.passrithm.R;
+import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 import com.example.passrithm.controller.MainActivity;
 import com.example.passrithm.controller.base.SignupActivity;
 import com.example.passrithm.controller.base.UserAccount;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 
 public class PinSettingActivity extends AppCompatActivity {
     //private boolean changePwdUnlock = false;
+    private ImageView lockButton;
+
     EditText etPasscode1;
     EditText etPasscode2;
     EditText etPasscode3;
@@ -42,13 +46,15 @@ public class PinSettingActivity extends AppCompatActivity {
      Button[] btnTime;
     private DatabaseReference mDatabaseRef;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_setting);
 
-        mDatabaseRef= FirebaseDatabase.getInstance().getReference("Passrithm");
 
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("Passrithm");
+        //edittext
         etPasscode1=findViewById(R.id.passcode1);
         etPasscode2=findViewById(R.id.passcode2);
         etPasscode3=findViewById(R.id.passcode3);
@@ -177,8 +183,10 @@ public class PinSettingActivity extends AppCompatActivity {
             else if(state.equals("false")){
                 setting();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("setting", "password_list");
 
                 startActivity(intent);
+
             }
 
         }
@@ -198,7 +206,7 @@ public class PinSettingActivity extends AppCompatActivity {
             String strPin = inputPassword();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(strPin!=null)
-            mDatabaseRef.child("UserAccount").child(user.getUid()).child("pinId").push().setValue(strPin);
+            mDatabaseRef.child("UserAccount").child(user.getUid()).child("pinId").setValue(strPin);
         }
         public void unlock(){
 
@@ -214,11 +222,12 @@ public class PinSettingActivity extends AppCompatActivity {
                    // String pinNum=.child(user.getUid()).child("pinId").getValue(String.class);
                     //Log.d("uid_u",user.getUid());
                     Log.d("input1",pinNum);
-                    //Log.d("uid_u",user.getUid());
+                    Log.d("uid_u",user.getUid());
                     if(strPin!=null){
                         if(strPin.equals(pinNum)){
                             Toast.makeText(PinSettingActivity.this, "잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("setting", "password_list");
                             intent.putExtra("state","true");
                             startActivity(intent);
                         }else Toast.makeText(PinSettingActivity.this, "다시시도하십시오.", Toast.LENGTH_SHORT).show();
