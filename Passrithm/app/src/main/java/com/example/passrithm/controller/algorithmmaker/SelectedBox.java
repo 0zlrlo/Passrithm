@@ -1,9 +1,11 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller.algorithmmaker;
 
 public class SelectedBox {
     String name;
     String inputData;
     private int viewType;
+
+    SelectedBox() {}
 
     SelectedBox(String name, String inputData, int viewType) {
         this.name = name;

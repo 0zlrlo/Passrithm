@@ -12,5 +12,5 @@
     <color name="background_gray">#F7F6F6</color>
     <color name="save_box_red">#9A351B</color>
     <color name="insert_box_red">#E6C6BD</color>
-
+    <color name="red">#FF0000</color>
 </resources>
