@@ -7,12 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.internal.SafeIterableMap;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.passrithm.R;
-
-
 import java.util.List;
 
 public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdapter.PasswordBoxViewHolder> {
