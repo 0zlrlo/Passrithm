@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlgorithmListFragment extends Fragment {
-    private DatabaseReference databaseReference;
     ImageView plusButton;
     ViewGroup rootView;
 
@@ -54,7 +53,7 @@ public class AlgorithmListFragment extends Fragment {
     }
 
     private void variableInitialization() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Algorithm list");
+        FirebaseDatabase.getInstance().getReference("Algorithm list");
         plusButton = rootView.findViewById(R.id.algorithm_list_plus_iv);
     }
 
