@@ -4,7 +4,9 @@ import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_
 import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_TOP_CONTENT;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +22,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.MainActivity;
+import com.example.passrithm.controller.pwlist.PinSettingActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,6 +174,22 @@ public class PasswordRevisionFragment extends Fragment {
         }
 
         String result = String.join(" + ", name);
+        saveAlgolist(result);
 //        mDatabaseRef.child("Algorithm list").child(result).setValue(postSelectedBoxes);
     }
+
+    private void saveAlgolist(String result) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList")
+                .push().setValue(result).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(algorithmGeneratorActivity, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }
+
