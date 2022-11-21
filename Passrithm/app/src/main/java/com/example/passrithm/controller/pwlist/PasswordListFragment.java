@@ -19,26 +19,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
-
-import com.example.passrithm.R;
-import com.example.passrithm.controller.MainActivity;
-import com.example.passrithm.controller.algoritmlist.AlgorithmGeneratorActivity;
-import com.example.passrithm.controller.algoritmlist.SelectedBox;
-import com.example.passrithm.controller.base.FindpasswordActivity;
-import com.example.passrithm.controller.base.LoginActivity;
-import com.example.passrithm.controller.base.UserAccount;
-import com.google.android.material.progressindicator.BaseProgressIndicatorSpec;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-
 import com.example.passrithm.R;
 import com.example.passrithm.controller.MainActivity;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -107,7 +90,3 @@ public class PasswordListFragment extends Fragment {
         return view;
     }
 }
-
-
-
-

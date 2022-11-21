@@ -7,11 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.internal.SafeIterableMap;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.passrithm.R;
-import com.example.passrithm.controller.algoritmlist.AlgorithmBoxRVAdapter;
 
 import java.util.List;
 
