@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,13 +19,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.MainActivity;
+import com.example.passrithm.controller.base.SignupActivity;
 import com.example.passrithm.controller.base.UserAccount;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -163,20 +169,28 @@ public class PinSettingActivity extends AppCompatActivity {
         }
 
         private void onOk() {
-            setting();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            Intent before_intent = getIntent();
+            String state=before_intent.getStringExtra("state");
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if(state==null||!state.equals("false")){
+            unlock();}
+            else if(state.equals("false")){
+                setting();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                startActivity(intent);
+            }
 
         }
         private String inputPassword(){
             String password1= etPasscode1.getText().toString();
-            Log.d("input1",password1);
+           // Log.d("input1",password1);
             String password2=etPasscode2.getText().toString();
-            Log.d("input2",password2);
+            //Log.d("input2",password2);
             String password3= etPasscode3.getText().toString();
-            Log.d("input3",password3);
+            //Log.d("input3",password3);
             String password4= etPasscode4.getText().toString();
-            Log.d("input4",password4);
+            //Log.d("input4",password4);
             return password1+password2+password3+password4;
         }
         public void setting(){
@@ -184,35 +198,45 @@ public class PinSettingActivity extends AppCompatActivity {
             String strPin = inputPassword();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(strPin!=null)
-            mDatabaseRef.child("UserAccount").child(user.getUid()).child("pinId").setValue(strPin);
+            mDatabaseRef.child("UserAccount").child(user.getUid()).child("pinId").push().setValue(strPin);
+        }
+        public void unlock(){
+
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            //DatabaseReference conditionRef=mRootRef.child("Passrithm").child(user.getUid()).child("pinId");
+            String strPin = inputPassword();
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   String pinNum= snapshot.child("Passrithm").child("UserAccount").child(user.getUid()).child("pinId").getValue(String.class);
+                   // String pinNum=.child(user.getUid()).child("pinId").getValue(String.class);
+                    //Log.d("uid_u",user.getUid());
+                    Log.d("input1",pinNum);
+                    //Log.d("uid_u",user.getUid());
+                    if(strPin!=null){
+                        if(strPin.equals(pinNum)){
+                            Toast.makeText(PinSettingActivity.this, "잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("state","true");
+                            startActivity(intent);
+                        }else Toast.makeText(PinSettingActivity.this, "다시시도하십시오.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
     };
 
 
 
-   /* class AppLock {
-        Context context;
-        SharedPreferences sharedPref = context.getSharedPreferences("appLock", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
 
-            public void setPassLock (String password){
-                editor.putString("applock", password);
-                editor.commit();
-            }
-            boolean checkPassLock (String password){
-                return sharedPref.getString("applock", "0") == password;
-            }
-
-            boolean isPassLockSet() {
-                if(sharedPref.contains("applock")){
-                    return true;
-                }
-                return false;
-
-            }
-
-    }*/
 
 }
 
