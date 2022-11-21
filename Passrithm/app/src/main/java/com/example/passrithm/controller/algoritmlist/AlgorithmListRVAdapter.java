@@ -1,6 +1,7 @@
 package com.example.passrithm.controller.algoritmlist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,53 +11,45 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
-import com.example.passrithm.controller.algorithmmaker.AlgorithmBox;
+import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 
 import java.util.List;
 
-public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRVAdapter.AlgorithmBoxViewHolder> {
+public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRVAdapter.AlgorithmListViewHolder> {
 
-    private List<AlgorithmBox> BoxList;
+    private List<PostSelectedBox> BoxList;
     private OnItemClickListener clickListener;
 
     public interface OnItemClickListener {
         void OnItemClick(int position);
     }
 
-    public AlgorithmListRVAdapter(Context requireContext, List<AlgorithmBox> BoxList, OnItemClickListener clickListener) {
+    public AlgorithmListRVAdapter(Context requireContext, List<PostSelectedBox> BoxList) {
         this.BoxList = BoxList;
+        Log.d("adapter", BoxList.toString());
         this.clickListener = clickListener;
     }
 
-    public class AlgorithmBoxViewHolder extends RecyclerView.ViewHolder {
-        protected TextView algoName;
-        protected TextView algoDetail;
-        protected TextView algoExample;
-        protected TextView insertButton;
-
-        public AlgorithmBoxViewHolder(View view) {
+    public class AlgorithmListViewHolder extends RecyclerView.ViewHolder {
+        protected TextView name;
+        public AlgorithmListViewHolder(View view) {
             super(view);
-            this.algoName = (TextView) view.findViewById(R.id.algorithm_name_tv);
-            this.algoDetail = (TextView) view.findViewById(R.id.algorithm_detail_tv);
-            this.algoExample = (TextView) view.findViewById(R.id.algorithm_example_tv);
-            this.insertButton = view.findViewById(R.id.algorithm_insert_bt);
+            this.name = (TextView) view.findViewById(R.id.algolist_item_tv);
         }
     }
 
     @NonNull
     @Override
-    public AlgorithmListRVAdapter.AlgorithmBoxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_algorithm_box, parent, false);
+    public AlgorithmListRVAdapter.AlgorithmListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_algorithm_list, parent, false);
 
-        return new AlgorithmBoxViewHolder(view);
+        return new AlgorithmListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlgorithmListRVAdapter.AlgorithmBoxViewHolder holder, int position) {
-//        holder.algoName.setText(BoxList.get(position).name);
-//        holder.algoDetail.setText(BoxList.get(position).explanation);
-//        holder.algoExample.setText(BoxList.get(position).example);
-//
+    public void onBindViewHolder(@NonNull AlgorithmListRVAdapter.AlgorithmListViewHolder holder, int position) {
+        holder.name.setText(BoxList.get(position).getName());
+
 //        holder.insertButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -67,6 +60,7 @@ public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRV
 
     @Override
     public int getItemCount() {
-        return (null != BoxList ? BoxList.size() : 0);
+        Log.d("boxListSize", String.valueOf(BoxList.size()));
+        return BoxList.size();
     }
 }
