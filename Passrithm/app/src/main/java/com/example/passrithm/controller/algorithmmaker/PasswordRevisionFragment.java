@@ -132,7 +132,7 @@ public class PasswordRevisionFragment extends Fragment {
                     postSelectedBoxes.add(new PostSelectedBox(x.name, x.getViewType()));
                 });
 
-                postFirebase(postSelectedBoxes);
+                postFirebase(algorithmGeneratorActivity.algorithmMakeFragment.getSelectedBoxes());
                 algorithmGeneratorActivity.finish();
             }
         });
@@ -153,43 +153,35 @@ public class PasswordRevisionFragment extends Fragment {
         confirm = rootView.findViewById(R.id.last_revision_modify_direct_confirm_tv);
     }
 
-    private void postFirebase(List<PostSelectedBox> postSelectedBoxes) {
+    private void postFirebase(List<SelectedBox> selectedBoxes) {
         List<String> name = new ArrayList<>();
         int count = 0;
 
-        for (PostSelectedBox postSelectedBox : postSelectedBoxes) {
+        for (SelectedBox selectedBox : selectedBoxes) {
             if (count == 3) {
                 name.add("etc");
                 break;
             }
 
-            if (postSelectedBox.getViewType() == FOR_BOTTOM_CONTENT) {
+            if (selectedBox.getViewType() == FOR_BOTTOM_CONTENT) {
                 name.add("for문(끝)");
-            } else if (postSelectedBox.getViewType() == FOR_TOP_CONTENT) {
+            } else if (selectedBox.getViewType() == FOR_TOP_CONTENT) {
                 name.add("for문(시작)");
             } else {
-                name.add(postSelectedBox.name);
+                name.add(selectedBox.name);
             }
             count++;
         }
 
         String result = String.join(" + ", name);
-        saveAlgolist(result);
-//        mDatabaseRef.child("Algorithm list").child(result).setValue(postSelectedBoxes);
+        saveAlgorithm(result, selectedBoxes);
     }
 
-    private void saveAlgolist(String result) {
+    private void saveAlgorithm(String result, List<SelectedBox> selectedBoxes) {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList")
-                .push().setValue(result).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(algorithmGeneratorActivity, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(result).push().setValue(selectedBoxes);
     }
 }
-
