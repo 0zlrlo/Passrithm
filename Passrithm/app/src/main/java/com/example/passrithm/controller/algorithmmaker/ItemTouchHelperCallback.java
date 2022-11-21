@@ -1,4 +1,4 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller.algorithmmaker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
