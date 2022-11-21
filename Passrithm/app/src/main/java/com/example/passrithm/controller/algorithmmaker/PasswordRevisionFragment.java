@@ -126,12 +126,6 @@ public class PasswordRevisionFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<PostSelectedBox> postSelectedBoxes = new ArrayList<>();
-                Stream<SelectedBox> stream = algorithmGeneratorActivity.algorithmMakeFragment.getSelectedBoxes().stream();
-                stream.forEach(x -> {
-                    postSelectedBoxes.add(new PostSelectedBox(x.name, x.getViewType()));
-                });
-
                 postFirebase(algorithmGeneratorActivity.algorithmMakeFragment.getSelectedBoxes());
                 algorithmGeneratorActivity.finish();
             }
@@ -174,14 +168,14 @@ public class PasswordRevisionFragment extends Fragment {
         }
 
         String result = String.join(" + ", name);
-        saveAlgorithm(result, selectedBoxes);
+        saveAlgorithm(new PostSelectedBox(result, selectedBoxes));
     }
 
-    private void saveAlgorithm(String result, List<SelectedBox> selectedBoxes) {
+    private void saveAlgorithm(PostSelectedBox postSelectedBox) {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(result).push().setValue(selectedBoxes);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").push().setValue(postSelectedBox);
     }
 }

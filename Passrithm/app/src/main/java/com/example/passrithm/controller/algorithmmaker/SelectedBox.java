@@ -5,6 +5,8 @@ public class SelectedBox {
     String inputData;
     private int viewType;
 
+    SelectedBox() {}
+
     SelectedBox(String name, String inputData, int viewType) {
         this.name = name;
         this.inputData = inputData;

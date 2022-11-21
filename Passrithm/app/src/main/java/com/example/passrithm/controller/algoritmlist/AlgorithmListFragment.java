@@ -14,6 +14,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
+import com.example.passrithm.controller.algorithmmaker.SelectedBox;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +31,7 @@ public class AlgorithmListFragment extends Fragment {
     private DatabaseReference databaseReference;
     ImageView plusButton;
     ViewGroup rootView;
-    List<Object> test = new ArrayList<>();
+    List<PostSelectedBox> algorithmList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -44,22 +48,7 @@ public class AlgorithmListFragment extends Fragment {
             }
         });
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                test.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    Object testData = dataSnapshot.getValue(Object.class);
-//                    test.add(testData);
-//                }
-                Log.w("MainActivity", "treeList = " + snapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("MainActivity", "onCancelled");
-            }
-        });
+        getAlgoList();
 
         return rootView;
     }
@@ -67,5 +56,29 @@ public class AlgorithmListFragment extends Fragment {
     private void variableInitialization() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Algorithm list");
         plusButton = rootView.findViewById(R.id.algorithm_list_plus_iv);
+    }
+
+    private void getAlgoList() {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        ValueEventListener mValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    PostSelectedBox info_each = postSnapshot.getValue(PostSelectedBox.class);
+                    Log.d("info_each", info_each.toString());
+                    algorithmList.add(info_each);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").addValueEventListener(mValueEventListener);
     }
 }

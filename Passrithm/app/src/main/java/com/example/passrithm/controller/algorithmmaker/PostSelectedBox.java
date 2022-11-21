@@ -1,19 +1,31 @@
 package com.example.passrithm.controller.algorithmmaker;
 
+import java.util.List;
+
 public class PostSelectedBox {
     String name;
-    private int viewType;
+    List<SelectedBox> selectedBoxes;
 
-    PostSelectedBox(String name, int viewType) {
+    PostSelectedBox() {}
+
+    PostSelectedBox(String name, List<SelectedBox> selectedBoxes) {
         this.name = name;
-        this.viewType = viewType;
+        this.selectedBoxes = selectedBoxes;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getViewType() {
-        return viewType;
+    public List<SelectedBox> getSelectedBoxes() {
+        return selectedBoxes;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += name + "\n";
+        result += selectedBoxes + "\n";
+        return result;
     }
 }
