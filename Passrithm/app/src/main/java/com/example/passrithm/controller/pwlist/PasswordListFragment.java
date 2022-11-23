@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,28 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PasswordListFragment extends Fragment {
-    private List<PasswordBox> passwordBoxes;
+    private List<PasswordBox> passwordBoxes,receiveBoxes;
     private MainActivity mainActivity;
     private AlertDialog pwShareDialog;
     private String shareEmail;
+    private DatabaseReference mDatabase;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -36,17 +46,43 @@ public class PasswordListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle saveInstanceState){
         View view=(View) inflater.inflate(R.layout.fragment_password_list, container, false);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabase= FirebaseDatabase.getInstance().getReference("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList");
         passwordBoxes = new ArrayList<>();
-        PasswordBox example= new PasswordBox("비밀번호");
-        passwordBoxes.add(example);
         PasswordBoxRVAdapter passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(), passwordBoxes, new PasswordBoxRVAdapter.OnItemClickListener(){
             @Override
             public void OnItemClick(int position) {
                 showDialog();
             }
         });
+
+
+mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int size = (int) snapshot.getChildrenCount();
+                String pwsize = Integer.toString(size);
+                Log.d("pw_size",pwsize);
+                for(DataSnapshot messageData : snapshot.getChildren()){
+                    PasswordBox example= new PasswordBox(messageData.child("domain").getValue().toString(),messageData.child("password").getValue().toString());
+                    passwordBoxes.add(example);
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         RecyclerView passwordBox = view.findViewById(R.id.password_list_rc);
+
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        //passwordBox.setLayoutManager(layoutManager);
         passwordBox.setAdapter(passwordBoxRVAdapter);
+
 
         return view;
     }
