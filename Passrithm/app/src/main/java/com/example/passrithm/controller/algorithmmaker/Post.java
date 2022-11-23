@@ -9,6 +9,10 @@ public class Post {
         this.postSelectedBox = postSelectedBox;
     }
 
+    public String getKey() {
+        return key;
+    }
+
     @Override
     public String toString() {
         return key + "\n";

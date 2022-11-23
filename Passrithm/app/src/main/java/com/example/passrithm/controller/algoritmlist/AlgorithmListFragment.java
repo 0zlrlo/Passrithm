@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.AlgorithmRecyclerActivity;
 import com.example.passrithm.controller.algorithmmaker.Post;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 import com.example.passrithm.controller.algorithmmaker.SelectedBoxRVAdapter;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +80,11 @@ public class AlgorithmListFragment extends Fragment {
                 AlgorithmListRVAdapter algorithmListRVAdapter = new AlgorithmListRVAdapter(getContext(), algorithmList, new AlgorithmListRVAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
-
+                        Intent intent = new Intent(getActivity(), AlgorithmRecyclerActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("key", posts.get(position).getKey());
+                        intent.putExtra("selectedBoxes", (Serializable) algorithmList.get(position).getSelectedBoxes());
+                        startActivity(intent);
                     }
                 });
                 RecyclerView algorithmListRc = rootView.findViewById(R.id.algorithm_list_rc);
