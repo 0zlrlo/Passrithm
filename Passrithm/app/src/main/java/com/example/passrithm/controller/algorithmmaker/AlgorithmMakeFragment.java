@@ -10,6 +10,7 @@ import static java.lang.Integer.parseInt;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -176,7 +177,11 @@ public class AlgorithmMakeFragment extends Fragment {
 
     void showPopUp(int algoId) {
         if (!algorithmBoxes.get(algoId).isPopUp) {
-            // return void
+            return;
+        }
+        if (algoId == 4) {
+            specialCharacters();
+            return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
@@ -249,6 +254,26 @@ public class AlgorithmMakeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void specialCharacters() {
+        final CharSequence[] oItems = {"!", "@", "#", "$", "?", "%", "^", "&", "*"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+        builder.setTitle("색상을 선택하세요")
+                .setItems(oItems, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(4).name, oItems[which].toString(), MAIN_CONTENT));
+                        algorithmGeneratorActivity.result += oItems[which].toString();
+                        selectedBoxRVAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+        algoBoxDialog = builder.create();
     }
 
     List<SelectedBox> getSelectedBoxes() {
