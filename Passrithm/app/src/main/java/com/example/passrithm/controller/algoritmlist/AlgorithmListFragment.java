@@ -2,7 +2,6 @@ package com.example.passrithm.controller.algoritmlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.AlgorithmRecyclerActivity;
+import com.example.passrithm.controller.algorithmmaker.PostAlgorithm;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
-import com.example.passrithm.controller.algorithmmaker.SelectedBoxRVAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,13 +67,24 @@ public class AlgorithmListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<PostSelectedBox> algorithmList = new ArrayList<>();
+                List<PostAlgorithm> postAlgorithms = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     PostSelectedBox info_each = postSnapshot.getValue(PostSelectedBox.class);
+                    postAlgorithms.add(new PostAlgorithm(key, info_each));
                     algorithmList.add(info_each);
                 }
 
-                AlgorithmListRVAdapter algorithmListRVAdapter = new AlgorithmListRVAdapter(getContext(), algorithmList);
+                AlgorithmListRVAdapter algorithmListRVAdapter = new AlgorithmListRVAdapter(getContext(), algorithmList, new AlgorithmListRVAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        Intent intent = new Intent(getActivity(), AlgorithmRecyclerActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("key", postAlgorithms.get(position).getKey());
+                        intent.putExtra("selectedBoxes", (Serializable) algorithmList.get(position).getSelectedBoxes());
+                        startActivity(intent);
+                    }
+                });
                 RecyclerView algorithmListRc = rootView.findViewById(R.id.algorithm_list_rc);
                 algorithmListRc.setAdapter(algorithmListRVAdapter);
             }
