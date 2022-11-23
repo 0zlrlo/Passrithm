@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.passrithm.R;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRVAdapter.AlgorithmListViewHolder> {
@@ -24,17 +26,18 @@ public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRV
         void OnItemClick(int position);
     }
 
-    public AlgorithmListRVAdapter(Context requireContext, List<PostSelectedBox> BoxList) {
+    public AlgorithmListRVAdapter(Context requireContext, List<PostSelectedBox> BoxList, OnItemClickListener clickListener) {
         this.BoxList = BoxList;
-        Log.d("adapter", BoxList.toString());
         this.clickListener = clickListener;
     }
 
     public class AlgorithmListViewHolder extends RecyclerView.ViewHolder {
         protected TextView name;
+        protected TextView background;
         public AlgorithmListViewHolder(View view) {
             super(view);
             this.name = (TextView) view.findViewById(R.id.algolist_item_tv);
+            this.background = view.findViewById(R.id.algolist_item_background);
         }
     }
 
@@ -50,12 +53,12 @@ public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRV
     public void onBindViewHolder(@NonNull AlgorithmListRVAdapter.AlgorithmListViewHolder holder, int position) {
         holder.name.setText(BoxList.get(position).getName());
 
-//        holder.insertButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                clickListener.OnItemClick(holder.getAdapterPosition());
-//            }
-//        });
+        holder.background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.OnItemClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override

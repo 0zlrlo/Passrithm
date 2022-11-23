@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.algorithmmaker.Post;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 import com.example.passrithm.controller.algorithmmaker.SelectedBoxRVAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,13 +67,20 @@ public class AlgorithmListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<PostSelectedBox> algorithmList = new ArrayList<>();
+                List<Post> posts = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     PostSelectedBox info_each = postSnapshot.getValue(PostSelectedBox.class);
+                    posts.add(new Post(key, info_each));
                     algorithmList.add(info_each);
                 }
 
-                AlgorithmListRVAdapter algorithmListRVAdapter = new AlgorithmListRVAdapter(getContext(), algorithmList);
+                AlgorithmListRVAdapter algorithmListRVAdapter = new AlgorithmListRVAdapter(getContext(), algorithmList, new AlgorithmListRVAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+
+                    }
+                });
                 RecyclerView algorithmListRc = rootView.findViewById(R.id.algorithm_list_rc);
                 algorithmListRc.setAdapter(algorithmListRVAdapter);
             }
