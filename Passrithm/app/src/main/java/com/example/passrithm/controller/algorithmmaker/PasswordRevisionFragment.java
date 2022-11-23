@@ -58,6 +58,12 @@ public class PasswordRevisionFragment extends Fragment {
         algorithmGeneratorActivity = (AlgorithmGeneratorActivity) getActivity();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        resultBox.setText(algorithmGeneratorActivity.result);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

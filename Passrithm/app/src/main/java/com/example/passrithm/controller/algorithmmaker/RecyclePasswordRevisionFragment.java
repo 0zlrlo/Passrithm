@@ -54,6 +54,12 @@ public class RecyclePasswordRevisionFragment extends Fragment {
         algorithmRecyclerActivity = (AlgorithmRecyclerActivity) getActivity();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        resultBox.setText(algorithmRecyclerActivity.result);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
