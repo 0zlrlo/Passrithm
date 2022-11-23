@@ -177,5 +177,6 @@ public class PasswordRevisionFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").push().setValue(postSelectedBox);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(new PostPassword(algorithmGeneratorActivity.algorithmMakeFragment.getSiteDomain(), algorithmGeneratorActivity.result));
     }
 }

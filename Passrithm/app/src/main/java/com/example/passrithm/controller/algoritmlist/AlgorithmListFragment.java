@@ -2,7 +2,6 @@ package com.example.passrithm.controller.algoritmlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 import com.example.passrithm.controller.AlgorithmRecyclerActivity;
-import com.example.passrithm.controller.algorithmmaker.Post;
+import com.example.passrithm.controller.algorithmmaker.PostAlgorithm;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
-import com.example.passrithm.controller.algorithmmaker.SelectedBoxRVAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -69,11 +67,11 @@ public class AlgorithmListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<PostSelectedBox> algorithmList = new ArrayList<>();
-                List<Post> posts = new ArrayList<>();
+                List<PostAlgorithm> postAlgorithms = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     PostSelectedBox info_each = postSnapshot.getValue(PostSelectedBox.class);
-                    posts.add(new Post(key, info_each));
+                    postAlgorithms.add(new PostAlgorithm(key, info_each));
                     algorithmList.add(info_each);
                 }
 
@@ -82,7 +80,7 @@ public class AlgorithmListFragment extends Fragment {
                     public void OnItemClick(int position) {
                         Intent intent = new Intent(getActivity(), AlgorithmRecyclerActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("key", posts.get(position).getKey());
+                        intent.putExtra("key", postAlgorithms.get(position).getKey());
                         intent.putExtra("selectedBoxes", (Serializable) algorithmList.get(position).getSelectedBoxes());
                         startActivity(intent);
                     }

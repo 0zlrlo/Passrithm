@@ -258,4 +258,8 @@ public class AlgorithmRemakeFragment extends Fragment {
     List<SelectedBox> getSelectedBoxes() {
         return selectedBoxes;
     }
+
+    String getSiteDomain() {
+        return siteDomain;
+    }
 }

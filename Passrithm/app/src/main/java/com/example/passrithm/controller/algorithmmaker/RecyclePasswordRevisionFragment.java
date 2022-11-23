@@ -171,6 +171,10 @@ public class RecyclePasswordRevisionFragment extends Fragment {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        PostPassword postPassword = new PostPassword(algorithmRecyclerActivity.algorithmRemakeFragment.getSiteDomain(), algorithmRecyclerActivity.result);
+
         mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(key).setValue(postSelectedBox);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(postPassword);
     }
 }

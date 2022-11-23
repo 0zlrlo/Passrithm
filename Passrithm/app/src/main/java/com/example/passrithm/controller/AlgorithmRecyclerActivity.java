@@ -23,6 +23,7 @@ public class AlgorithmRecyclerActivity extends AppCompatActivity {
     private String key;
     private List<SelectedBox> selectedBoxes;
     public String result;
+    public AlgorithmRemakeFragment algorithmRemakeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class AlgorithmRecyclerActivity extends AppCompatActivity {
     public void setMakerFragment(List<SelectedBox> selectedBoxes) {
         FragmentTransaction transaction;
         transaction = getSupportFragmentManager().beginTransaction();
-        AlgorithmRemakeFragment algorithmRemakeFragment = new AlgorithmRemakeFragment(selectedBoxes);
+        algorithmRemakeFragment = new AlgorithmRemakeFragment(selectedBoxes);
 
         transaction.replace(R.id.algorithm_recycler_main_frm, algorithmRemakeFragment);
         transaction.commit();

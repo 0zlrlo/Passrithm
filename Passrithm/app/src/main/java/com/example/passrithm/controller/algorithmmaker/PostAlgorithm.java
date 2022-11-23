@@ -1,10 +1,10 @@
 package com.example.passrithm.controller.algorithmmaker;
 
-public class Post {
+public class PostAlgorithm {
     String key;
     PostSelectedBox postSelectedBox;
 
-    public Post(String key, PostSelectedBox postSelectedBox) {
+    public PostAlgorithm(String key, PostSelectedBox postSelectedBox) {
         this.key = key;
         this.postSelectedBox = postSelectedBox;
     }
