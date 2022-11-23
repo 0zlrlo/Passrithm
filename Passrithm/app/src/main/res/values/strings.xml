@@ -15,4 +15,5 @@
     <string name="save_txt">txt 파일로 저장</string>
     <string name="save_image">이미지 파일로 저장</string>
     <string name="select_letter">영어 문자를 선택해주세요.</string>
+    <string name="share_id">비밀번호를 공유하고 싶은 \n 사람의 id를 입력하세요.</string>
 </resources>
