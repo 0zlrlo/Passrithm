@@ -26,11 +26,13 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
         this.clickListener=clickListener;
     }
     public class PasswordBoxViewHolder extends RecyclerView.ViewHolder{
-        protected TextView shareText;
+        protected TextView domainText;
         protected ImageView shareButton;
+        protected TextView passwordText;
         public PasswordBoxViewHolder(@NonNull View itemView){
             super(itemView);
-            this.shareText=itemView.findViewById(R.id.password_item_tv);
+            this.domainText=itemView.findViewById(R.id.password_domain_tv);
+            this.passwordText=itemView.findViewById(R.id.password_tv);
             this.shareButton=itemView.findViewById(R.id.pw_share_btn);
 
         }
@@ -46,7 +48,8 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
 
     @Override
     public void onBindViewHolder(@NonNull PasswordBoxViewHolder holder, int position) {
-        holder.shareText.setText(Boxlist.get(position).password);
+        holder.passwordText.setText(Boxlist.get(position).password);
+        holder.domainText.setText(Boxlist.get(position).domain);
         holder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
