@@ -24,31 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-
     public PasswordListFragment passwordListFragment = new PasswordListFragment();
     public PasswordLockFragment passwordLockFragment = new PasswordLockFragment();
-
-
-    private void test_login() {
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        User user = new User(1, "minseon");
-
-        mDatabase.child("users").child("minseon").setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(MainActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,38 +68,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
         transaction.commit();
-    }
-}
-
-
-class User {
-    int user_id;
-    String name;
-
-    User(int user_id, String name) {
-        this.user_id = user_id;
-        this.name = name;
-    }
-
-    public String getUserName() {
-        return name;
-    }
-
-    public void setUserName(String userName) {
-        this.name = userName;
-    }
-
-    public int getUserId() {
-        return user_id;
-    }
-
-    public void setUserId(int userId) {
-        this.user_id = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName=" + name + ", userId" + user_id + "}";
     }
 }

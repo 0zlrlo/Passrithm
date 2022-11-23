@@ -4,7 +4,6 @@ import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_
 import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_TOP_CONTENT;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,24 +20,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
-import com.example.passrithm.controller.MainActivity;
-import com.example.passrithm.controller.pwlist.PinSettingActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.passrithm.controller.AlgorithmRecyclerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class PasswordRevisionFragment extends Fragment {
+public class RecyclePasswordRevisionFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth; //파이어베이스 인증 처리
     private DatabaseReference mDatabaseRef;  //실시간 데이터베이스
     TextView saveButton;
@@ -50,18 +40,24 @@ public class PasswordRevisionFragment extends Fragment {
     EditText resultBox;
     LinearLayout bigLetterBox;
     ViewGroup rootView;
-    AlgorithmGeneratorActivity algorithmGeneratorActivity;
+    AlgorithmRecyclerActivity algorithmRecyclerActivity;
+    String key;
+
+    public RecyclePasswordRevisionFragment() {}
+    public RecyclePasswordRevisionFragment(String key) {
+        this.key = key;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        algorithmGeneratorActivity = (AlgorithmGeneratorActivity) getActivity();
+        algorithmRecyclerActivity = (AlgorithmRecyclerActivity) getActivity();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        resultBox.setText(algorithmGeneratorActivity.result);
+        resultBox.setText(algorithmRecyclerActivity.result);
     }
 
     @Nullable
@@ -69,7 +65,7 @@ public class PasswordRevisionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_password_revision , container, false);
         variableInitialization();
-        resultBox.setText(algorithmGeneratorActivity.result);
+        resultBox.setText(algorithmRecyclerActivity.result);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Passrithm");
 
@@ -87,12 +83,12 @@ public class PasswordRevisionFragment extends Fragment {
                 EditText bigLetterEt = rootView.findViewById(R.id.last_revision_et);
                 try {
                     index = Integer.parseInt(bigLetterEt.getText().toString()) - 1;
-                    char bigLetter = (char) (algorithmGeneratorActivity.result.charAt(index) + 'A' - 'a');
+                    char bigLetter = (char) (algorithmRecyclerActivity.result.charAt(index) + 'A' - 'a');
 
-                    StringBuilder stringBuilder = new StringBuilder(algorithmGeneratorActivity.result);
+                    StringBuilder stringBuilder = new StringBuilder(algorithmRecyclerActivity.result);
                     stringBuilder.setCharAt(index, bigLetter);
-                    algorithmGeneratorActivity.result = stringBuilder.toString();
-                    resultBox.setText(algorithmGeneratorActivity.result);
+                    algorithmRecyclerActivity.result = stringBuilder.toString();
+                    resultBox.setText(algorithmRecyclerActivity.result);
 
                     alert.setVisibility(View.INVISIBLE);
                 } catch (NumberFormatException e) {
@@ -109,7 +105,7 @@ public class PasswordRevisionFragment extends Fragment {
                 //키보드 올리기
                 resultBox.setFocusableInTouchMode(true);
                 resultBox.requestFocus();
-                InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) algorithmRecyclerActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(resultBox,0);
 
                 //저장하기 구현
@@ -120,11 +116,11 @@ public class PasswordRevisionFragment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(algorithmGeneratorActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                InputMethodManager imm = (InputMethodManager) algorithmRecyclerActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(algorithmRecyclerActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 confirm.setVisibility(View.GONE);
 
-                algorithmGeneratorActivity.result = resultBox.getText().toString();
+                algorithmRecyclerActivity.result = resultBox.getText().toString();
                 resultBox.clearFocus();
             }
         });
@@ -132,8 +128,8 @@ public class PasswordRevisionFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postFirebase(algorithmGeneratorActivity.algorithmMakeFragment.getSelectedBoxes());
-                algorithmGeneratorActivity.finish();
+                postFirebase(algorithmRecyclerActivity.getSelectedBoxes());
+                algorithmRecyclerActivity.finish();
             }
         });
         return rootView;
@@ -149,7 +145,7 @@ public class PasswordRevisionFragment extends Fragment {
         directRevisionButton = rootView.findViewById(R.id.last_revision_modify_direct_tv);
         bigLetterBox = rootView.findViewById(R.id.last_revision_big_letter_box);
         resultBox = rootView.findViewById(R.id.last_revision_result_string_tv);
-        bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);                confirm = rootView.findViewById(R.id.last_revision_modify_direct_confirm_tv);
+        bigLetterChangeButton = rootView.findViewById(R.id.last_revision_big_letter_bt);
         confirm = rootView.findViewById(R.id.last_revision_modify_direct_confirm_tv);
     }
 
@@ -182,7 +178,9 @@ public class PasswordRevisionFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").push().setValue(postSelectedBox);
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(new PostPassword(algorithmGeneratorActivity.algorithmMakeFragment.getSiteDomain(), algorithmGeneratorActivity.result));
+        PostPassword postPassword = new PostPassword(algorithmRecyclerActivity.algorithmRemakeFragment.getSiteDomain(), algorithmRecyclerActivity.result);
+
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(key).setValue(postSelectedBox);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(postPassword);
     }
 }

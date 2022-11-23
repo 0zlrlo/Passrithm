@@ -45,6 +45,7 @@
         <activity android:name=".controller.base.SignupActivity" />
         <activity android:name=".controller.MainActivity" />
         <activity android:name=".controller.pwlist.ExportActivity"/>
+        <activity android:name=".controller.AlgorithmRecyclerActivity"/>
     </application>
 
 </manifest>

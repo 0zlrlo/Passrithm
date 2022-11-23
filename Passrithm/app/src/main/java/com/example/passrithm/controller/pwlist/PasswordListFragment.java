@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
-import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 import com.example.passrithm.controller.MainActivity;
 
 import java.util.ArrayList;
