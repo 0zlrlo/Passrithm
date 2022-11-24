@@ -1,9 +1,12 @@
 package com.example.passrithm.controller.base;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;  //실시간 데이터베이스
 
     EditText email,pw;
+    CheckBox autoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabaseRef= FirebaseDatabase.getInstance().getReference("Passrithm");
         email=findViewById(R.id.et_loginemail);
         pw=findViewById(R.id.et_loginpassword);
+        autoLogin = (CheckBox) findViewById(R.id.cb_login);
 
         //로그인 버튼
         Button login=findViewById(R.id.btn_login);
@@ -65,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
 
         //회원가입 버튼
         TextView sign = findViewById(R.id.tv_wantsignup);

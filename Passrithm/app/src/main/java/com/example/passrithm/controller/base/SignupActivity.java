@@ -76,7 +76,6 @@ public class SignupActivity extends AppCompatActivity {
                         account.setNameId(strId);
                         //setvalue는 데이터베이스에 인서트하는 행위
                         mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
-                            Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         if (task.getException().toString() != null) {
@@ -93,6 +92,7 @@ public class SignupActivity extends AppCompatActivity {
         //회원가입 완료 버튼
         signup= findViewById(R.id.btn_signup);
         signup.setOnClickListener(v -> {
+            Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         });
