@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btn_login);
         autoLogin = (CheckBox) findViewById(R.id.cb_login);
 
+        pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
         String loginEmail = email.getText().toString().trim();
         String loginPw = pw.getText().toString().trim();
         loginChecked = pref.getBoolean("LoginChecked", false);
