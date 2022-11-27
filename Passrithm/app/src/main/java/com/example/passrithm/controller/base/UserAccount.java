@@ -13,6 +13,14 @@ public class UserAccount {
 
     public UserAccount(){ }  //realtime database 사용할 때 빈 생성자
 
+    public UserAccount(String Idtoken, String emailId, String passwordId, String nameId, String pinId){
+        this.Idtoken=Idtoken;
+        this.emailId=emailId;
+        this.passwordId=passwordId;
+        this.nameId=nameId;
+        this.pinId=pinId;
+    }
+
     public String getIdtoken(){return Idtoken;}
     public void setIdtoken(String Idtoken){this.Idtoken=Idtoken;}
 
