@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="이메일을 입력하세요"
         android:inputType="textEmailAddress"
         app:layout_constraintTop_toBottomOf="@id/tv_signupemail" />
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="아이디를 입력하세요"
         app:layout_constraintTop_toBottomOf="@id/tv_signupid" />
 
@@ -69,23 +69,34 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_signupid" />
+    <TextView
+        android:id="@+id/tv_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:text="6자 이상 입력하세요"
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_signuppassword" />
 
     <EditText
         android:id="@+id/et_signuppassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="비밀번호를 입력하세요"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/tv_signuppassword" />
+        app:layout_constraintTop_toBottomOf="@id/tv_alert" />
 
     <EditText
         android:id="@+id/et_signuprepassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="비밀번호를 다시 입력하세요"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/et_signuppassword" />
@@ -108,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="SIGN UP"
         app:layout_constraintTop_toBottomOf="@id/btn_ok" />
 </LinearLayout>

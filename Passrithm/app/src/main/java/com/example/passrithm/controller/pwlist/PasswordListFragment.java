@@ -42,6 +42,12 @@ public class PasswordListFragment extends Fragment {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
     }
+// <<<<<<< jieun1
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view=(View) inflater.inflate(R.layout.fragment_password_list, container, false);
+// =======
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle saveInstanceState){
@@ -60,6 +66,7 @@ public class PasswordListFragment extends Fragment {
 mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+// >>>>>>> main
 
                 int size = (int) snapshot.getChildrenCount();
                 String pwsize = Integer.toString(size);
