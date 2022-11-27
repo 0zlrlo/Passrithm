@@ -1,15 +1,14 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller.algorithmmaker;
 
 import static android.text.InputType.TYPE_CLASS_NUMBER;
-
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_BOTTOM_CONTENT;
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.FOR_TOP_CONTENT;
-import static com.example.passrithm.controller.algoritmlist.Code.ViewType.MAIN_CONTENT;
-
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_BOTTOM_CONTENT;
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.FOR_TOP_CONTENT;
+import static com.example.passrithm.controller.algorithmmaker.Code.ViewType.MAIN_CONTENT;
 import static java.lang.Integer.parseInt;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,19 +24,21 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
+import com.example.passrithm.controller.AlgorithmGeneratorActivity;
+import com.example.passrithm.controller.AlgorithmRecyclerActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class AlgorithmMakeFragment extends Fragment {
+public class AlgorithmRemakeFragment extends Fragment {
     private TextView saveButton;
     private TextView siteInput;
     private TextView resultBox;
     private String siteDomain;
     private TextView refreshButton;
-    private AlgorithmGeneratorActivity algorithmGeneratorActivity;
+    private AlgorithmRecyclerActivity algorithmRecyclerActivity;
     private ViewGroup rootView;
     private AlertDialog siteInputDialog;
     private AlertDialog algoBoxDialog;
@@ -52,10 +53,15 @@ public class AlgorithmMakeFragment extends Fragment {
             new AlgorithmBox(5, "for문 블록", "원하는 만큼 선택된 블럭을 반복할 수 있습니다.", "예시) for문 2번 - (사이트도메인 + 키워드), \n사이트도메인 키워드 사이트도메인 키워드", true, "몇번 반복하시겠습니까?")
     );
 
+    public AlgorithmRemakeFragment() {}
+    public AlgorithmRemakeFragment(List<SelectedBox> selectedBoxes) {
+        this.selectedBoxes = selectedBoxes;
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        algorithmGeneratorActivity = (AlgorithmGeneratorActivity) getActivity();
+        algorithmRecyclerActivity = (AlgorithmRecyclerActivity) getActivity();
     }
 
     @Nullable
@@ -68,7 +74,11 @@ public class AlgorithmMakeFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                algorithmGeneratorActivity.setFragment("passwordRevision");
+                selectedBoxes = selectedBoxRVAdapter.getBoxList();
+                algorithmRecyclerActivity.result = getResult(selectedBoxes);
+                resultBox.setText(algorithmRecyclerActivity.result);
+
+                algorithmRecyclerActivity.revisionPasswordFragment();
             }
         });
 
@@ -76,7 +86,8 @@ public class AlgorithmMakeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectedBoxes = selectedBoxRVAdapter.getBoxList();
-                resultBox.setText(getResult(selectedBoxes));
+                algorithmRecyclerActivity.result = getResult(selectedBoxes);
+                resultBox.setText(algorithmRecyclerActivity.result);
             }
         });
 
@@ -101,8 +112,8 @@ public class AlgorithmMakeFragment extends Fragment {
     }
 
     private void setSite() { // view로 추후 이동예정. 이유 : 사이트 주소에 대한 데이터를 세팅해줘야함.
-        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
-        View siteInputView = LayoutInflater.from(algorithmGeneratorActivity).inflate(R.layout.dialog_algomake_site, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmRecyclerActivity);
+        View siteInputView = LayoutInflater.from(algorithmRecyclerActivity).inflate(R.layout.dialog_algomake_site, null);
         TextView siteInputBotton = siteInputView.findViewById(R.id.algomake_site_input_bt);
         builder.setView(siteInputView)
                 .setCancelable(false);
@@ -126,7 +137,7 @@ public class AlgorithmMakeFragment extends Fragment {
         siteInput = rootView.findViewById(R.id.algomake_site_input_bt);
         resultBox = rootView.findViewById(R.id.algomake_result_string_tv);
         refreshButton = rootView.findViewById(R.id.algomake_refresh_tv);
-        resultBox.setText(algorithmGeneratorActivity.result);
+        resultBox.setText(algorithmRecyclerActivity.result);
     }
 
     private String getResult(List<SelectedBox> selectedBoxes) {
@@ -141,7 +152,7 @@ public class AlgorithmMakeFragment extends Fragment {
                     if (selectedBoxes.get(j).getViewType() != FOR_BOTTOM_CONTENT) i++;
                 }
                 i--;
-            } else {
+            } else if (selectedBox.getViewType() != FOR_BOTTOM_CONTENT) {
                 result += selectedBox.inputData;
             }
         }
@@ -170,11 +181,15 @@ public class AlgorithmMakeFragment extends Fragment {
 
     void showPopUp(int algoId) {
         if (!algorithmBoxes.get(algoId).isPopUp) {
-            // return void
+            return;
+        }
+        if (algoId == 4) {
+            specialCharacters();
+            return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity);
-        View mDialogView = LayoutInflater.from(algorithmGeneratorActivity).inflate(R.layout.dialog_algorithm_box, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmRecyclerActivity);
+        View mDialogView = LayoutInflater.from(algorithmRecyclerActivity).inflate(R.layout.dialog_algorithm_box, null);
         builder.setView(mDialogView)
                 .setCancelable(true);
         algoBoxDialog = builder.create();
@@ -200,16 +215,16 @@ public class AlgorithmMakeFragment extends Fragment {
                     String subSiteDomain = siteDomain.substring(0, targetStringLength);
                     selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, subSiteDomain, MAIN_CONTENT));
 
-                    algorithmGeneratorActivity.result += subSiteDomain;
-                    resultBox.setText(algorithmGeneratorActivity.result);
+                    algorithmRecyclerActivity.result += subSiteDomain;
+                    resultBox.setText(algorithmRecyclerActivity.result);
                 }
 
                 if (algoId == 1 || algoId == 2) {
                     if (!inputData.equals("")) {
                         selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, inputData, MAIN_CONTENT));
                     }
-                    algorithmGeneratorActivity.result += inputData;
-                    resultBox.setText(algorithmGeneratorActivity.result);
+                    algorithmRecyclerActivity.result += inputData;
+                    resultBox.setText(algorithmRecyclerActivity.result);
                 }
 
                 if (algoId == 3) {
@@ -226,8 +241,8 @@ public class AlgorithmMakeFragment extends Fragment {
                     if (!inputData.equals("")) {
                         selectedBoxes.add(new SelectedBox(algorithmBoxes.get(algoId).name, generatedString, MAIN_CONTENT));
                     }
-                    algorithmGeneratorActivity.result += generatedString;
-                    resultBox.setText(algorithmGeneratorActivity.result);
+                    algorithmRecyclerActivity.result += generatedString;
+                    resultBox.setText(algorithmRecyclerActivity.result);
                 }
 
                 if (algoId == 5) {
@@ -243,5 +258,33 @@ public class AlgorithmMakeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void specialCharacters() {
+        final CharSequence[] oItems = {"!", "@", "#", "$", "?", "%", "^", "&", "*"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(algorithmRecyclerActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+        builder.setTitle("색상을 선택하세요")
+                .setItems(oItems, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        selectedBoxes.add(new SelectedBox(algorithmBoxes.get(4).name, oItems[which].toString(), MAIN_CONTENT));
+                        algorithmRecyclerActivity.result += oItems[which].toString();
+                        selectedBoxRVAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+        algoBoxDialog = builder.create();
+    }
+
+    List<SelectedBox> getSelectedBoxes() {
+        return selectedBoxes;
+    }
+
+    String getSiteDomain() {
+        return siteDomain;
     }
 }

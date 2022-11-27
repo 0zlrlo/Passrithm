@@ -8,6 +8,7 @@ public class UserAccount {
     private String emailId;
     private String passwordId;
     private String nameId;
+    private String pinId;
 
 
     public UserAccount(){ }  //realtime database 사용할 때 빈 생성자
@@ -24,5 +25,7 @@ public class UserAccount {
     public String getNameId(){return nameId;}
     public void setNameId(String nameId){this.nameId=nameId;}
 
+    public String getPinId(){return pinId;}
+    public void setPinId(String pinId){this.pinId=pinId;}
 
 }

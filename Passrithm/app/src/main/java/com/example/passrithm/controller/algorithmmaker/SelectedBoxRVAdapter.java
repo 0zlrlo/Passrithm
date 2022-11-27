@@ -1,4 +1,4 @@
-package com.example.passrithm.controller.algoritmlist;
+package com.example.passrithm.controller.algorithmmaker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passrithm.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
