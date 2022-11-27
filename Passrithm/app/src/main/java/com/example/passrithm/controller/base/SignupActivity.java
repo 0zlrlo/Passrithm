@@ -105,14 +105,9 @@ public class SignupActivity extends AppCompatActivity {
         //회원가입 완료 버튼
         signup= findViewById(R.id.btn_signup);
         signup.setOnClickListener(v -> {
-// <<<<<<< jieun1
             Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-// =======
-           /* Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);*/
-// >>>>>>> main
         });
     }
 }
