@@ -5,16 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.passrithm.R;
+import com.example.passrithm.controller.algorithmmaker.PostPassword;
+
 import java.util.List;
 
 
 public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdapter.PasswordBoxViewHolder> {
-    private List<PasswordBox> Boxlist;
+    private static List<PasswordBox> Boxlist;
     private OnItemClickListener clickListener;
 
     public interface OnItemClickListener{
@@ -48,8 +51,8 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
 
     @Override
     public void onBindViewHolder(@NonNull PasswordBoxViewHolder holder, int position) {
-        holder.passwordText.setText(Boxlist.get(position).password);
-        holder.domainText.setText(Boxlist.get(position).domain);
+        holder.passwordText.setText(Boxlist.get(position).getPassword());
+        holder.domainText.setText(Boxlist.get(position).getDomain());
         holder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +66,17 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
     public int getItemCount() {
         return (null != Boxlist? Boxlist.size() : 0);
     }
+
+    public static PasswordBox getItem(int position) {
+        return Boxlist.get(position); // 아이템 가져오기
+    }
+
+    public void setItem(List<PasswordBox> list){
+        Boxlist=list;
+        notifyDataSetChanged();
+    }
 }
+
 
 
 

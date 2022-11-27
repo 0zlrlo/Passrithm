@@ -1,10 +1,12 @@
 package com.example.passrithm.controller.pwlist;
 
+import com.example.passrithm.controller.algorithmmaker.PostPassword;
+
 public class PasswordBox {
     String domain;
     String password;
 
-    public PasswordBox() {}
+
 
     public PasswordBox(String siteDomain, String password) {
         this.domain = siteDomain;
@@ -18,4 +20,5 @@ public class PasswordBox {
     public String getPassword() {
         return password;
     }
+
 }
