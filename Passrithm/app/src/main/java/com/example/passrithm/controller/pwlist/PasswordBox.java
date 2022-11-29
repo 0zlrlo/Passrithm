@@ -21,4 +21,8 @@ public class PasswordBox {
         return password;
     }
 
+    @Override
+    public String toString() {
+        return domain + " : " + password + "\n";
+    }
 }
