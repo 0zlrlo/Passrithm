@@ -6,6 +6,7 @@ public class SharePassword {
     private String domain;
 
     public SharePassword(){}
+
     public SharePassword(String password, String domain,String email){
         this.password = password;
         this.email=email;
@@ -20,4 +21,9 @@ public class SharePassword {
 
     public String getDomain(){return domain;}
     public void setDomain(String domain){this.domain=domain;}
+
+    @Override
+    public String toString() {
+        return password + " " + email + " " + domain;
+    }
 }

@@ -220,30 +220,39 @@ public class PasswordBaseFragment extends Fragment {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
         //String Uid = user1.getUid();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.d("snapshot", snapshot.getChildren().toString());
+//                for (DataSnapshot snap : snapshot.getChildren()) {
+//                    Log.d("key", snap.getKey());
+//                    Log.d("value", snap.getValue(String.class).toString());
+//                }
+                  Log.d("value", snapshot.getValue(String.class));
 
-                String userEmail=snapshot.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").getValue(String.class);
-                String checkEmail = snapshot.child("Passrithm").child("SharePassword").child("email").getValue(String.class);
-                Log.d("snapemail",user1.getUid());
-                assert userEmail != null;
-                String[] array = userEmail.split("@");
-                assert array[0] != null;
-               // if(array[0].equals(checkEmail)){
-                   // showAcceptDialog();
-                    String domain = snapshot.child("SharePassword").child(checkEmail).child("domain").getValue(String.class);
-                    String password = snapshot.child("SharePassword").child(checkEmail).child("password").getValue(String.class);
-                    PasswordBox passwordBox = new PasswordBox(domain,password);
-                    passwordBoxes.add(passwordBox);
-              //  }
+//                String userEmail=snapshot.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").getValue(String.class);
+//                String checkEmail = snapshot.child("Passrithm").child("SharePassword").child("email").getValue(String.class);
+//                Log.d("snapemail",user1.getUid());
+//                assert userEmail != null;
+//                String[] array = userEmail.split("@");
+//                assert array[0] != null;
+//               // if(array[0].equals(checkEmail)){
+//                   // showAcceptDialog();
+//                    String domain = snapshot.child("SharePassword").child(checkEmail).child("domain").getValue(String.class);
+//                    String password = snapshot.child("SharePassword").child(checkEmail).child("password").getValue(String.class);
+//                    PasswordBox passwordBox = new PasswordBox(domain,password);
+//                    passwordBoxes.add(passwordBox);
+//              //  }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+
+        databaseReference.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").addValueEventListener(valueEventListener);
+
     }
 
 }
