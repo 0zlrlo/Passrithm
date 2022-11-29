@@ -59,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         signup.setOnClickListener(onClickListener);
     }
 
-        View.OnClickListener onClickListener= new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 switch (v.getId()){
