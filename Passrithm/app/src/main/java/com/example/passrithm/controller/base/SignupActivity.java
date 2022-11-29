@@ -45,14 +45,25 @@ public class SignupActivity extends AppCompatActivity {
         pw = findViewById(R.id.et_signuppassword);
         repw = findViewById(R.id.et_signuprepassword);
         //비밀번호 확인 버튼
-        findViewById(R.id.btn_ok).setOnClickListener(onClickListener);
+        signup=findViewById(R.id.btn_signup);
+
+        //비밀번호 찾기 버튼
+        confirm = findViewById(R.id.btn_ok);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SignupActivity.this, "비밀번호가 일치합니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        signup.setOnClickListener(onClickListener);
     }
 
-        View.OnClickListener onClickListener=new View.OnClickListener() {
+        View.OnClickListener onClickListener= new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 switch (v.getId()){
-                    case R.id.btn_ok:
+                    case R.id.btn_signup:
                     signUp();
                     break;
                 }
@@ -81,14 +92,10 @@ public class SignupActivity extends AppCompatActivity {
                         account.setPinId("");
                         //setvalue는 데이터베이스에 인서트하는 행위
                         mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
-// <<<<<<< jieun1
-// =======
                             Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), PinSettingActivity.class);
                         intent.putExtra("state", "false");
                         startActivity(intent);
-
-// >>>>>>> main
                     }
                     else {
                         if (task.getException().toString() != null) {
@@ -99,15 +106,15 @@ public class SignupActivity extends AppCompatActivity {
             });
         }
         else{
-            Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignupActivity.this, "다시 한 번 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
         }
 
         //회원가입 완료 버튼
-        signup= findViewById(R.id.btn_signup);
-        signup.setOnClickListener(v -> {
+//        signup= findViewById(R.id.btn_signup);
+//        signup.setOnClickListener(v -> {
             Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-        });
+//        });
     }
 }
