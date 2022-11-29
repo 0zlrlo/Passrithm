@@ -56,7 +56,8 @@ public class PasswordBaseFragment extends Fragment {
     private EditText searchET;
     PasswordBoxRVAdapter passwordBoxRVAdapter;
     private ImageView searchBtn;
-    private AlertDialog pwShareDialog;
+    private AlertDialog pwShareDialog, pwAcceptDialog;
+
 
 
 
@@ -75,6 +76,9 @@ public class PasswordBaseFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = (View) inflater.inflate(R.layout.fragment_password_base, container, false);
+        //accept dialog 부분
+        waitDialog();
+
 
         //exprot 부분
         exportButton = view.findViewById(R.id.export);
@@ -88,13 +92,13 @@ public class PasswordBaseFragment extends Fragment {
         });
 
         //리사이클러뷰 부분, dialog 부착해야함
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList");
         passwordBoxes = new ArrayList<>();
         passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(), passwordBoxes, new PasswordBoxRVAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                //showDialog(position);
+                showDialog(position);
             }
         });
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -156,7 +160,6 @@ public class PasswordBaseFragment extends Fragment {
         pwShareDialog = builder.create();
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        Query sort = FirebaseDatabase.getInstance().getReference().child("Passrithm").child("UserAccount").orderByChild("emailId");;
         FirebaseAuth user = FirebaseAuth.getInstance();
 
         TextView shareButton = dialogView.findViewById(R.id.dialog_ok_btn);
@@ -167,41 +170,80 @@ public class PasswordBaseFragment extends Fragment {
                 EditText editText = dialogView.findViewById(R.id.dialog_email_input_et);
                 String shareEmail = editText.getText().toString();
                 PasswordBox shareBox = PasswordBoxRVAdapter.getItem(position);
-                Log.d("shareBox",shareBox.getPassword());
+                SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),shareEmail);
+                mDatabase.child("Passrithm").child("SharePassword").child(shareEmail).setValue(sharePassword);
+            }
+        });
+        pwShareDialog.show();
+    }
 
-                /*sort.addValueEventListener(new ValueEventListener() {
+    void showAcceptDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+        View dialogView = LayoutInflater.from(mainActivity).inflate(R.layout.dialog_password_accept, null);
+        builder.setView(dialogView)
+                .setCancelable(true);
+        pwAcceptDialog = builder.create();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        TextView acceptBtn=dialogView.findViewById(R.id.dialog_accept_btn);
+        acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child("Passrithm").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (int i=0;i<position;i++) {
-
-                     *//*      // String key = snapshot.child("Passrithm").child("UserAccount").push().getKey();
-                          //  Firebasep=new UserAccount(allUser.getIdtoken(), allUser.getEmailId(), allUser.getPasswordId(), allUser.getNameId(), allUser.getPinId());
-                            token.add(key);
-                            Log.d("newkey",key);
-*//*
-
-                        }
-                       *//* for(int i=0;i< token.size();i++){
-                           mDatabase.child("Passrithm").child("UserAccount").child(token.get(i)).child("passwordList").
-                            if (shareEmail.equals(들아가야하는값)) {
-                                //receiveList(shareBox.domain,shareBox.password);
-                                mDatabase.child("Passrithm").child("UserAccount").child(token.get(i)).child("passwordList").setValue(shareBox);
-
-                            }
-                        }*//*
-                        pwShareDialog.dismiss();
+                        String domain = snapshot.child("SharePassword").child("email").child("domain").getValue(String.class);
+                        String password = snapshot.child("SharePassword").child("email").child("password").getValue(String.class);
+                        PasswordBox passwordBox = new PasswordBox(domain,password);
+                        passwordBoxes.add(passwordBox);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });*/
-
+                }); pwAcceptDialog.dismiss();
+            }
+        });
+        TextView rejectBtn=dialogView.findViewById(R.id.dialog_reject_btn);
+        rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pwAcceptDialog.dismiss();
             }
         });
 
-        pwShareDialog.show();
+            pwAcceptDialog.show();
+
+    }
+
+    void waitDialog(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
+        //String Uid = user1.getUid();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String userEmail=snapshot.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").getValue(String.class);
+                String checkEmail = snapshot.child("Passrithm").child("SharePassword").child("email").getValue(String.class);
+                Log.d("snapemail",user1.getUid());
+                assert userEmail != null;
+                String[] array = userEmail.split("@");
+                assert array[0] != null;
+               // if(array[0].equals(checkEmail)){
+                   // showAcceptDialog();
+                    String domain = snapshot.child("SharePassword").child(checkEmail).child("domain").getValue(String.class);
+                    String password = snapshot.child("SharePassword").child(checkEmail).child("password").getValue(String.class);
+                    PasswordBox passwordBox = new PasswordBox(domain,password);
+                    passwordBoxes.add(passwordBox);
+              //  }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
