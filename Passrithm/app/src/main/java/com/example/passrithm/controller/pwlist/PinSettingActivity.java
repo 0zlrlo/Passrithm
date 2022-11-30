@@ -123,19 +123,19 @@ public class PinSettingActivity extends AppCompatActivity {
             if(currentValue != -1){
                 if(etPasscode1.isFocused()){
                     setEditText(etPasscode1,etPasscode2,strCurrentValue);
-                  // etPasscode1.setBackgroundColor(Color.parseColor("#86B0DK"));
+                    etPasscode1.setBackgroundResource(R.drawable.change_circle);
                 }
                 else if(etPasscode2.isFocused()){
                     setEditText(etPasscode2,etPasscode3,strCurrentValue);
-                    //etPasscode2.setBackgroundColor(Color.parseColor("#86B0DK"));
+                    etPasscode2.setBackgroundResource(R.drawable.change_circle);
                 }
                 else if(etPasscode3.isFocused()){
                     setEditText(etPasscode3,etPasscode4,strCurrentValue);
-                   // etPasscode3.setBackgroundColor(Color.parseColor("#86B0DK"));
+                    etPasscode3.setBackgroundResource(R.drawable.change_circle);
                 }
                 else if(etPasscode4.isFocused()){
                     etPasscode4.setText(strCurrentValue);
-                    //etPasscode4.setBackgroundColor(Color.parseColor("#86B0DK"));
+                    etPasscode4.setBackgroundResource(R.drawable.change_circle);
                 }
 
             }
@@ -152,7 +152,7 @@ public class PinSettingActivity extends AppCompatActivity {
             currentEditText.setText(strCurrentValue);
             nextEditText.requestFocus();
             nextEditText.setText("");
-            currentEditText.setBackgroundColor(Color.parseColor("#87CF00"));
+          //  currentEditText.setBackgroundColor(Color.parseColor("#87CF00"));
         }
 
 
@@ -160,18 +160,22 @@ public class PinSettingActivity extends AppCompatActivity {
 
             if(etPasscode1.isFocused()){
                 etPasscode1.setText("");
+                etPasscode1.setBackgroundResource(R.drawable.circle);
             }
             else if(etPasscode2.isFocused()){
                 etPasscode1.setText("");
                 etPasscode1.requestFocus();
+                etPasscode2.setBackgroundResource(R.drawable.circle);
             }
             else if(etPasscode3.isFocused()){
                 etPasscode2.setText("");
                 etPasscode2.requestFocus();
+                etPasscode3.setBackgroundResource(R.drawable.circle);
             }
             else if(etPasscode4.isFocused()){
                 etPasscode3.setText("");
                 etPasscode3.requestFocus();
+                etPasscode4.setBackgroundResource(R.drawable.circle);
             }
         }
 

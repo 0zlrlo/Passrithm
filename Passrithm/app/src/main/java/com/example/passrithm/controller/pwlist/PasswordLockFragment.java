@@ -41,6 +41,11 @@ public class PasswordLockFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), PinSettingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+
+
+                Bundle result = new Bundle();
+                result.putString("bundleKey", "result");
+                getParentFragmentManager().setFragmentResult("requestKey", result);
             }
         });
         return view;

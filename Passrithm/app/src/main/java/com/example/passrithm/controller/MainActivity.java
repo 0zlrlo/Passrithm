@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         transaction = getSupportFragmentManager().beginTransaction();
         final RecyclerView rcView = (RecyclerView)findViewById(R.id.password_list_rc);
 
+
+
         PasswordLockFragment passwordLockFragment = new PasswordLockFragment();
 
         switch(fragment){
@@ -62,10 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.password_list_base_frm,passwordLockFragment);
                 rcView.setVisibility(View.GONE);
 
+
                 break;
             case "password_list":
                 transaction.hide(passwordLockFragment);
                 rcView.setVisibility(View.VISIBLE);
+
+
                 break;
 
         }
