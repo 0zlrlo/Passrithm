@@ -1,6 +1,7 @@
 package com.example.passrithm.controller.pwlist;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -59,6 +60,17 @@ public class PasswordBaseFragment extends Fragment {
     private AlertDialog pwShareDialog, pwAcceptDialog;
 
 
+  /*  public static PasswordBaseFragment newInstance(String acccept){
+        PasswordBaseFragment pbf= new PasswordBaseFragment();
+        Bundle args = new Bundle();
+        args.putString("accept",acccept);
+        pbf.setArguments(args);
+        return pbf;
+    }*/
+
+
+
+
 
 
 
@@ -77,7 +89,13 @@ public class PasswordBaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = (View) inflater.inflate(R.layout.fragment_password_base, container, false);
         //accept dialog 부분
+
+
+       // Log.d("accept",accept);
+
+
         waitDialog();
+
 
 
         //exprot 부분
@@ -102,6 +120,7 @@ public class PasswordBaseFragment extends Fragment {
             }
         });
         mDatabase.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -177,7 +196,7 @@ public class PasswordBaseFragment extends Fragment {
         pwShareDialog.show();
     }
 
-    void showAcceptDialog(){
+    void showAcceptDialog(String domain, String password){
         AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         View dialogView = LayoutInflater.from(mainActivity).inflate(R.layout.dialog_password_accept, null);
         builder.setView(dialogView)
@@ -188,20 +207,9 @@ public class PasswordBaseFragment extends Fragment {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.child("Passrithm").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String domain = snapshot.child("SharePassword").child("email").child("domain").getValue(String.class);
-                        String password = snapshot.child("SharePassword").child("email").child("password").getValue(String.class);
-                        PasswordBox passwordBox = new PasswordBox(domain,password);
-                        passwordBoxes.add(passwordBox);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                }); pwAcceptDialog.dismiss();
+                PasswordBox passwordBox = new PasswordBox(domain,password);
+                passwordBoxes.add(passwordBox);
+                pwAcceptDialog.dismiss();
             }
         });
         TextView rejectBtn=dialogView.findViewById(R.id.dialog_reject_btn);
@@ -217,41 +225,56 @@ public class PasswordBaseFragment extends Fragment {
     }
 
     void waitDialog(){
+       // newInstance("accept");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
-        //String Uid = user1.getUid();
+
+        final String[] userEmail = new String[2];
+
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Log.d("snapshot", snapshot.getChildren().toString());
-//                for (DataSnapshot snap : snapshot.getChildren()) {
-//                    Log.d("key", snap.getKey());
-//                    Log.d("value", snap.getValue(String.class).toString());
-//                }
+//
+
                   Log.d("value", snapshot.getValue(String.class));
+                String email = snapshot.getValue(String.class);
+                //String checkEmail = snapshot.getValue(String.class);
+                String[] array=null;
+                if(email != null){
+                array = email.split("@");
+                Log.d("value",array[0]);
+                userEmail[0] = array[0];
+               // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
+                    ValueEventListener mValueEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
 
-//                String userEmail=snapshot.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").getValue(String.class);
-//                String checkEmail = snapshot.child("Passrithm").child("SharePassword").child("email").getValue(String.class);
-//                Log.d("snapemail",user1.getUid());
-//                assert userEmail != null;
-//                String[] array = userEmail.split("@");
-//                assert array[0] != null;
-//               // if(array[0].equals(checkEmail)){
-//                   // showAcceptDialog();
-//                    String domain = snapshot.child("SharePassword").child(checkEmail).child("domain").getValue(String.class);
-//                    String password = snapshot.child("SharePassword").child(checkEmail).child("password").getValue(String.class);
-//                    PasswordBox passwordBox = new PasswordBox(domain,password);
-//                    passwordBoxes.add(passwordBox);
-//              //  }
+                            //Log.d("value", snapshot.getValue(String.class));
+
+                            String domain = snapshot.child("domain").getValue(String.class);
+                            String password = snapshot.child("password").getValue(String.class);
+                            Log.d("domain",domain);
+                            Log.d("password",password);
+
+                            showAcceptDialog(domain,password);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    };
+                    databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
+
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         };
-
         databaseReference.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").addValueEventListener(valueEventListener);
+
 
     }
 

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     FragmentTransaction transaction;
     public void FragmentChange(String fragment){
         transaction = getSupportFragmentManager().beginTransaction();

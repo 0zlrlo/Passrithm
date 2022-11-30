@@ -231,6 +231,7 @@ public class PinSettingActivity extends AppCompatActivity {
                             intent.putExtra("setting", "password_list");
                             intent.putExtra("state","true");
                             startActivity(intent);
+
                         }else Toast.makeText(PinSettingActivity.this, "다시시도하십시오.", Toast.LENGTH_SHORT).show();
                     }
                 }
