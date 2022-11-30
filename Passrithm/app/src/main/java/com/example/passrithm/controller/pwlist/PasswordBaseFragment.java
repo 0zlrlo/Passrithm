@@ -26,8 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.passrithm.R;
+import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 import com.example.passrithm.controller.MainActivity;
 
+import com.example.passrithm.controller.algorithmmaker.PostPassword;
+import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -209,6 +212,8 @@ public class PasswordBaseFragment extends Fragment {
             public void onClick(View v) {
                 PasswordBox passwordBox = new PasswordBox(domain,password);
                 passwordBoxes.add(passwordBox);
+                passwordBoxRVAdapter.notifyDataSetChanged();
+                saveAlgorithm(passwordBox);
                 pwAcceptDialog.dismiss();
             }
         });
@@ -248,14 +253,9 @@ public class PasswordBaseFragment extends Fragment {
                     ValueEventListener mValueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-
-                            //Log.d("value", snapshot.getValue(String.class));
-
                             String domain = snapshot.child("domain").getValue(String.class);
                             String password = snapshot.child("password").getValue(String.class);
-                            Log.d("domain",domain);
-                            Log.d("password",password);
+
 
                             showAcceptDialog(domain,password);
                         }
@@ -265,6 +265,7 @@ public class PasswordBaseFragment extends Fragment {
                         }
                     };
                     databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
+                    databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).removeValue();
 
                 }
             }
@@ -276,6 +277,14 @@ public class PasswordBaseFragment extends Fragment {
         databaseReference.child("Passrithm").child("UserAccount").child(user1.getUid()).child("emailId").addValueEventListener(valueEventListener);
 
 
+
+    }
+    private void saveAlgorithm(PasswordBox passwordBox) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(passwordBox);
     }
 
 }
