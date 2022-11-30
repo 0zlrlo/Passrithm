@@ -43,10 +43,6 @@ public class MypageFragment extends Fragment {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                Intent intent=new Intent(getActivity(),LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getActivity(),"로그아웃 되었습니다",Toast.LENGTH_SHORT).show();
-
                 mFirebaseAuth.signOut();
 
                 SharedPreferences pref = mContext.getSharedPreferences("Logout", Activity.MODE_PRIVATE);
@@ -54,6 +50,10 @@ public class MypageFragment extends Fragment {
 
                 editor.clear();
                 editor.commit();
+
+                Intent intent=new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getActivity(),"로그아웃 되었습니다",Toast.LENGTH_SHORT).show();
 
             }
         });

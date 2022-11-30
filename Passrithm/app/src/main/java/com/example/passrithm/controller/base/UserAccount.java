@@ -4,7 +4,7 @@ package com.example.passrithm.controller.base;
 
 public class UserAccount {
 
-    private String Idtoken;  //파이어베이 아이디(고유 토큰)
+    private String Idtoken;  //파이어베이스 아이디(고유 토큰)
     private String emailId;
     private String passwordId;
     private String nameId;
