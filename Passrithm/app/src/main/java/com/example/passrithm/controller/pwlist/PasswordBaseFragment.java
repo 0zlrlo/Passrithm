@@ -255,8 +255,8 @@ public class PasswordBaseFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String domain = snapshot.child("domain").getValue(String.class);
                             String password = snapshot.child("password").getValue(String.class);
-
-
+                            String checkEmail = snapshot.child("email").getValue(String.class);
+                            if(userEmail[0].equals(checkEmail))
                             showAcceptDialog(domain,password);
                         }
                         @Override
@@ -265,7 +265,6 @@ public class PasswordBaseFragment extends Fragment {
                         }
                     };
                     databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
-                    databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).removeValue();
 
                 }
             }
@@ -286,5 +285,11 @@ public class PasswordBaseFragment extends Fragment {
 
         mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(passwordBox);
     }
+
+    private void deletePassword(String email){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Passrithm").child("SharePassword").child(email).removeValue();
+    }
+
 
 }
