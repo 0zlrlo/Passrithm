@@ -199,7 +199,7 @@ public class PasswordBaseFragment extends Fragment {
         pwShareDialog.show();
     }
 
-    void showAcceptDialog(String domain, String password){
+    void showAcceptDialog(String domain, String password, String checkEmail){
         AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         View dialogView = LayoutInflater.from(mainActivity).inflate(R.layout.dialog_password_accept, null);
         builder.setView(dialogView)
@@ -215,6 +215,7 @@ public class PasswordBaseFragment extends Fragment {
                 passwordBoxRVAdapter.notifyDataSetChanged();
                 saveAlgorithm(passwordBox);
                 pwAcceptDialog.dismiss();
+                deletePassword(checkEmail);
             }
         });
         TextView rejectBtn=dialogView.findViewById(R.id.dialog_reject_btn);
@@ -222,11 +223,11 @@ public class PasswordBaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 pwAcceptDialog.dismiss();
+                deletePassword(checkEmail);
             }
         });
 
-            pwAcceptDialog.show();
-
+        pwAcceptDialog.show();
     }
 
     void waitDialog(){
@@ -256,8 +257,9 @@ public class PasswordBaseFragment extends Fragment {
                             String domain = snapshot.child("domain").getValue(String.class);
                             String password = snapshot.child("password").getValue(String.class);
                             String checkEmail = snapshot.child("email").getValue(String.class);
-                            if(userEmail[0].equals(checkEmail))
-                            showAcceptDialog(domain,password);
+                            if(userEmail[0].equals(checkEmail)) {
+                                showAcceptDialog(domain, password, checkEmail);
+                            }
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
