@@ -56,7 +56,6 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //signup.setOnClickListener(onClickListener);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,30 +63,36 @@ public class SignupActivity extends AppCompatActivity {
                 String strId = id.getText().toString();
                 String strPw = pw.getText().toString();
                 String strRepw = repw.getText().toString();
-                mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-                            UserAccount account = new UserAccount();
-                            account.setIdtoken(firebaseUser.getUid());
-                            account.setEmailId(firebaseUser.getEmail());
-                            account.setPasswordId(strPw);
-                            account.setNameId(strId);
-                           // account.setPinId("");
-                            //setvalue는 데이터베이스에 인서트하는 행위
-                            mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
-                            Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), PinSettingActivity.class);
-                            intent.putExtra("state", "false");
-                            startActivity(intent);
-                        } else {
-                            //if (task.getException().toString() != null) {
-                            Toast.makeText(SignupActivity.this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show();
-                            //}
+                String state="false";
+                if (strPw.equals(strRepw)) {
+                    mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+                                UserAccount account = new UserAccount();
+                                account.setIdtoken(firebaseUser.getUid());
+                                account.setEmailId(firebaseUser.getEmail());
+                                account.setPasswordId(strPw);
+                                account.setNameId(strId);
+                                account.setPinId("");
+                                //setvalue는 데이터베이스에 인서트하는 행위
+                                mDatabaseRef.child("UserAccount").child(firebaseUser.getUid()).setValue(account);
+                                Toast.makeText(SignupActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), PinSettingActivity.class);
+                                intent.putExtra("state", "false");
+                                startActivity(intent);
+                            } else {
+                                //if (task.getException().toString() != null) {
+                                Toast.makeText(SignupActivity.this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show();
+                                //}
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else{
+                        Toast.makeText(SignupActivity.this, "다시 한 번 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
