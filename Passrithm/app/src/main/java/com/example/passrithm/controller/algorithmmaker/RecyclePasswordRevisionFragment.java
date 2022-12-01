@@ -180,7 +180,7 @@ public class RecyclePasswordRevisionFragment extends Fragment {
 
         PostPassword postPassword = new PostPassword(algorithmRecyclerActivity.algorithmRemakeFragment.getSiteDomain(), algorithmRecyclerActivity.result);
 
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(key).setValue(postSelectedBox);
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").setValue(postPassword);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("algorithmList").child(key).push().setValue(postSelectedBox);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").push().setValue(postPassword);
     }
 }
