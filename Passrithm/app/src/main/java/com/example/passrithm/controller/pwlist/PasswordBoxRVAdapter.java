@@ -57,7 +57,6 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
             @Override
             public void onClick(View v) {
                 clickListener.OnItemClick(holder.getAdapterPosition());
-
             }
         });
     }
