@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MypageFragment extends Fragment {
 
-    private FirebaseAuth mFirebaseAuth;
+    FirebaseAuth mFirebaseAuth;
     private View view;
     TextView etEmail;
     TextView etId;
@@ -44,16 +44,15 @@ public class MypageFragment extends Fragment {
             public void onClick(View view) {
 
                 mFirebaseAuth.signOut();
+                Intent intent=new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getActivity(),"로그아웃 되었습니다",Toast.LENGTH_SHORT).show();
 
                 SharedPreferences pref = mContext.getSharedPreferences("Logout", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
 
                 editor.clear();
                 editor.commit();
-
-                Intent intent=new Intent(getActivity(),LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getActivity(),"로그아웃 되었습니다",Toast.LENGTH_SHORT).show();
 
             }
         });

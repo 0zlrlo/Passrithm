@@ -105,6 +105,31 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+                if (loginChecked) {
+                    email.setText(pref.getString("loginEmail", ""));
+                    pw.setText(pref.getString("loginPw", ""));
+                    autoLogin.setChecked(true);
+                }
+                // 자동 로그인 체크되어있으면 SharedPreferences로 파일 저장
+                if (autoLogin.isChecked()) {
+                    // (파일 이름, 현재 파일 안에서만 사용) 파일 생성
+                    pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
+                    editor = pref.edit();
+
+                    editor.putBoolean("rememberMe", true); // 파일에 자동로그인 체크 입력
+                    editor.putString("loginEmail", loginEmail); // 파일에 이메일 정보 입력
+                    editor.putString("loginPw", loginPw); // 파일에 이메일 정보 입력
+                    editor.commit();
+
+//                    Intent intent = new Intent(view.getContext(), MainActivity.class);  //체크했기에 다음 접속할 때 다음 화면으로 바로 넘김
+//                    startActivity(intent);
+//                    finish(); // 현재 화면 액티비티 종료
+                } else {
+                    pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
+                    editor = pref.edit();
+                    editor.clear();
+                    editor.commit();
+                }
             }
         });
 
