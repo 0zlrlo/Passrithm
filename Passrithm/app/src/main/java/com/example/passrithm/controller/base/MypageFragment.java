@@ -28,7 +28,6 @@ public class MypageFragment extends Fragment {
     TextView etEmail;
     TextView etId;
     TextView etPw;
-    Context mContext;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mypage, container, false);
@@ -37,7 +36,7 @@ public class MypageFragment extends Fragment {
         etEmail = view.findViewById(R.id.et_mypageemail);
         etId= view.findViewById(R.id.et_mypageid);
         etPw= view.findViewById(R.id.et_mypagepassword);
-        
+
 
         Button btn_logout= view.findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -48,12 +47,12 @@ public class MypageFragment extends Fragment {
                 startActivity(intent);
                 Toast.makeText(getActivity(),"로그아웃 되었습니다",Toast.LENGTH_SHORT).show();
 
-                SharedPreferences pref = mContext.getSharedPreferences("Logout", Activity.MODE_PRIVATE);
+                SharedPreferences pref = getActivity().getSharedPreferences("Login", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
 
                 editor.clear();
                 editor.commit();
-
+                getActivity().finish();
             }
         });
         return view;
