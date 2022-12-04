@@ -1,6 +1,8 @@
 package com.example.passrithm.controller;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             Log.d("checking",myData);
         }else FragmentChange("password_lock");
        // FragmentChange("password_list");
-
+        SharedPreferences spf = getSharedPreferences("Login", Activity.MODE_PRIVATE);
+        Log.d("login", spf.getString("loginEmail", ""));
+        Log.d("login", spf.getString("loginPw", ""));
 
     }
 
