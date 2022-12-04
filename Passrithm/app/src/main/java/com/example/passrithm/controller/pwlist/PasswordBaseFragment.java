@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,7 @@ import com.example.passrithm.R;
 import com.example.passrithm.controller.AlgorithmGeneratorActivity;
 import com.example.passrithm.controller.MainActivity;
 
+import com.example.passrithm.controller.algorithmmaker.ItemTouchHelperCallback;
 import com.example.passrithm.controller.algorithmmaker.PostPassword;
 import com.example.passrithm.controller.algorithmmaker.PostSelectedBox;
 import com.google.firebase.auth.FirebaseAuth;
@@ -145,10 +147,11 @@ public class PasswordBaseFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        /*RecyclerView passwordBox = view.findViewById(R.id.password_list_rc);
+        /*passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(),passwordBoxes);
+        RecyclerView passwordBox = view.findViewById(R.id.password_list_rc);
         //passwordBox.setLayoutManager(new LinearLayoutManager(this));
-        passwordBox.setAdapter(passwordBoxRVAdapter);*/
-
+        passwordBox.setAdapter(passwordBoxRVAdapter);
+*/
 
         //검색 filter부분
         searchBtn=view.findViewById(R.id.search_img);
@@ -175,8 +178,11 @@ public class PasswordBaseFragment extends Fragment {
         });
 
         RecyclerView passwordBox = view.findViewById(R.id.password_list_rc);
-        passwordBox.setLayoutManager(new LinearLayoutManager(getContext()));
+        passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(),passwordBoxes);
         passwordBox.setAdapter(passwordBoxRVAdapter);
+
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCb(passwordBoxRVAdapter));
+        mItemTouchHelper.attachToRecyclerView(passwordBox);
 
 
         return view;
@@ -200,8 +206,9 @@ public class PasswordBaseFragment extends Fragment {
                 EditText editText = dialogView.findViewById(R.id.dialog_email_input_et);
                 String shareEmail = editText.getText().toString();
                 PasswordBox shareBox = PasswordBoxRVAdapter.getItem(position);
-                SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),shareEmail);
-                mDatabase.child("Passrithm").child("SharePassword").child(shareEmail).setValue(sharePassword);
+                String userEmail = emailSplit(shareEmail);
+                SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),userEmail);
+                mDatabase.child("Passrithm").child("SharePassword").child(userEmail).setValue(sharePassword);
             }
         });
         pwShareDialog.show();
@@ -299,6 +306,18 @@ public class PasswordBaseFragment extends Fragment {
     private void deletePassword(String email){
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Passrithm").child("SharePassword").child(email).removeValue();
+    }
+
+    private String emailSplit(String shareEmail) {
+        String[] userEmail = new String[1];
+        String[] array = null;
+
+        if (shareEmail != null) {
+            array = shareEmail.split("@");
+            Log.d("value", array[0]);
+            userEmail[0] = array[0];
+        }
+        return userEmail[0];
     }
 
 
