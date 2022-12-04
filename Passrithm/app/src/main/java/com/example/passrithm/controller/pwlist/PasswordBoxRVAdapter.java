@@ -103,14 +103,18 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         PasswordBox currentBox = Boxlist.get(position);
         List<String> keyList= new ArrayList<>();
-         ValueEventListener mValueEventListener = new ValueEventListener() {
+        ValueEventListener mValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for(DataSnapshot ds : snapshot.getChildren()){
-                PasswordBox passwordBox = ds.getValue(PasswordBox.class);
-                String key = ds.getKey();
-                keyList.add(key);
-            }
+                List<String> keyList= new ArrayList<>();
+
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    String key = ds.getKey();
+                    Log.d("key", key);
+                    keyList.add(key);
+                }
+
+                removePosition(position, keyList);
             }
 
             @Override
@@ -118,17 +122,26 @@ public class PasswordBoxRVAdapter extends RecyclerView.Adapter<PasswordBoxRVAdap
 
             }
         };
-        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordlist").addValueEventListener(mValueEventListener);
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList").addValueEventListener(mValueEventListener);
 
-       mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordlist").child(keyList.get(position)).removeValue();
-        Boxlist.remove(position); // 스와이프 한 객체 삭제
-        notifyItemRemoved(position); //Adapter에 데이터 이동알림
+//        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordlist").child(keyList.get(position)).removeValue();
+//        Boxlist.remove(position); // 스와이프 한 객체 삭제
+//        notifyItemRemoved(position); //Adapter에 데이터 이동알림
 
     }
     private void removeData(String key){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordlist").child(key).removeValue();
+    }
+
+    private void removePosition(int position, List<String> keyList) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("Passrithm").child("UserAccount").child(user.getUid()).child("passwordlist").child(keyList.get(position)).removeValue();
+        Boxlist.remove(position); // 스와이프 한 객체 삭제
+        notifyItemRemoved(position); //Adapter에 데이터 이동알림
     }
 
 }
