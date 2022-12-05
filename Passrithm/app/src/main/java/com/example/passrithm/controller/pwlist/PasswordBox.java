@@ -2,7 +2,9 @@ package com.example.passrithm.controller.pwlist;
 
 import com.example.passrithm.controller.algorithmmaker.PostPassword;
 
-public class PasswordBox {
+import java.io.Serializable;
+
+public class PasswordBox implements Serializable {
     String domain;
     String password;
 

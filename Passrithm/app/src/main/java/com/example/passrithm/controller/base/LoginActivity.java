@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
         String loginEmail = email.getText().toString().trim();
         String loginPw = pw.getText().toString().trim();
-        loginChecked = pref.getBoolean("LoginChecked", false);
+//        loginChecked = pref.getBoolean("rememberMe", false);
 
         if (pref.getBoolean("rememberMe", false)) {
             email.setText(pref.getString("loginEmail", ""));

@@ -46,6 +46,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -118,12 +119,13 @@ public class PasswordBaseFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ExportActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("passwordBox", (Serializable) passwordBoxes);
                 startActivity(intent);
             }
         });
 
         //리사이클러뷰 부분, dialog 부착해야함
-         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList");
         passwordBoxes = new ArrayList<>();
         passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(), passwordBoxes, new PasswordBoxRVAdapter.OnItemClickListener() {
@@ -162,17 +164,17 @@ public class PasswordBaseFragment extends Fragment {
                 filteredList.clear();
                 searchET = view.findViewById(R.id.search_et);
                 String searchText=searchET.getText().toString();
-               // Log.d("searchET",searchET.toString());
+                // Log.d("searchET",searchET.toString());
                 if(searchText.equals("")){
                     passwordBoxRVAdapter.setItem(passwordBoxes);
                 }else{
-                for(int i =0;i<passwordBoxes.size();i++){
-                    if (passwordBoxes.get(i).domain.equals(searchText)){
-                        filteredList.add(passwordBoxes.get(i));
+                    for(int i =0;i<passwordBoxes.size();i++){
+                        if (passwordBoxes.get(i).domain.equals(searchText)){
+                            filteredList.add(passwordBoxes.get(i));
 
+                        }
+                        passwordBoxRVAdapter.setItem(filteredList);
                     }
-                    passwordBoxRVAdapter.setItem(filteredList);
-                }
                 }
             }
         });
@@ -246,7 +248,7 @@ public class PasswordBaseFragment extends Fragment {
     }
 
     void waitDialog(){
-       // newInstance("accept");
+        // newInstance("accept");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -257,15 +259,15 @@ public class PasswordBaseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
 
-                  Log.d("value", snapshot.getValue(String.class));
+                Log.d("value", snapshot.getValue(String.class));
                 String email = snapshot.getValue(String.class);
                 //String checkEmail = snapshot.getValue(String.class);
                 String[] array=null;
                 if(email != null){
-                array = email.split("@");
-                Log.d("value",array[0]);
-                userEmail[0] = array[0];
-               // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
+                    array = email.split("@");
+                    Log.d("value",array[0]);
+                    userEmail[0] = array[0];
+                    // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
                     ValueEventListener mValueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
