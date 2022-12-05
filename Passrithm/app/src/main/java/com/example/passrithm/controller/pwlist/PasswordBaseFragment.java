@@ -44,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -116,6 +117,7 @@ public class PasswordBaseFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ExportActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("passwordBox", (Serializable) passwordBoxes);
                 startActivity(intent);
             }
         });

@@ -16,23 +16,21 @@ import java.util.List;
 
 public class ExportActivity extends AppCompatActivity {
     private ActivityExportBinding binding;
-    List<PasswordBox> testBox = List.of(
-            new PasswordBox("naver", "djdejddl@naver.com"),
-            new PasswordBox("kakao", "djdejddl@kakao.com")
-    );
-
+    List<PasswordBox> passwordBoxes;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityExportBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent = getIntent();
+        passwordBoxes = (List<PasswordBox>) intent.getSerializableExtra("passwordBox");
 
         binding.exportTxtLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
-                intent.putExtra(Intent.EXTRA_TEXT, getTextString(testBox));
+                intent.putExtra(Intent.EXTRA_TEXT, getTextString(passwordBoxes));
                 intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, "앱을 선택해주세요."));
             }
