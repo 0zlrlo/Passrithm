@@ -123,7 +123,7 @@ public class PasswordBaseFragment extends Fragment {
         });
 
         //리사이클러뷰 부분, dialog 부착해야함
-         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference("Passrithm").child("UserAccount").child(user.getUid()).child("passwordList");
         passwordBoxes = new ArrayList<>();
         passwordBoxRVAdapter = new PasswordBoxRVAdapter(requireContext(), passwordBoxes, new PasswordBoxRVAdapter.OnItemClickListener() {
@@ -161,17 +161,17 @@ public class PasswordBaseFragment extends Fragment {
                 filteredList.clear();
                 searchET = view.findViewById(R.id.search_et);
                 String searchText=searchET.getText().toString();
-               // Log.d("searchET",searchET.toString());
+                // Log.d("searchET",searchET.toString());
                 if(searchText.equals("")){
                     passwordBoxRVAdapter.setItem(passwordBoxes);
                 }else{
-                for(int i =0;i<passwordBoxes.size();i++){
-                    if (passwordBoxes.get(i).domain.equals(searchText)){
-                        filteredList.add(passwordBoxes.get(i));
+                    for(int i =0;i<passwordBoxes.size();i++){
+                        if (passwordBoxes.get(i).domain.equals(searchText)){
+                            filteredList.add(passwordBoxes.get(i));
 
+                        }
+                        passwordBoxRVAdapter.setItem(filteredList);
                     }
-                    passwordBoxRVAdapter.setItem(filteredList);
-                }
                 }
             }
         });
@@ -202,8 +202,9 @@ public class PasswordBaseFragment extends Fragment {
                 EditText editText = dialogView.findViewById(R.id.dialog_email_input_et);
                 String shareEmail = editText.getText().toString();
                 PasswordBox shareBox = PasswordBoxRVAdapter.getItem(position);
-                SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),shareEmail);
-                mDatabase.child("Passrithm").child("SharePassword").child(shareEmail).setValue(sharePassword);
+                String userEmail = emailSplit(shareEmail);
+                SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),userEmail);
+                mDatabase.child("Passrithm").child("SharePassword").child(userEmail).setValue(sharePassword);
             }
         });
         pwShareDialog.show();
@@ -241,7 +242,7 @@ public class PasswordBaseFragment extends Fragment {
     }
 
     void waitDialog(){
-       // newInstance("accept");
+        // newInstance("accept");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -252,15 +253,15 @@ public class PasswordBaseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
 
-                  Log.d("value", snapshot.getValue(String.class));
+                Log.d("value", snapshot.getValue(String.class));
                 String email = snapshot.getValue(String.class);
                 //String checkEmail = snapshot.getValue(String.class);
                 String[] array=null;
                 if(email != null){
-                array = email.split("@");
-                Log.d("value",array[0]);
-                userEmail[0] = array[0];
-               // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
+                    array = email.split("@");
+                    Log.d("value",array[0]);
+                    userEmail[0] = array[0];
+                    // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
                     ValueEventListener mValueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -301,6 +302,18 @@ public class PasswordBaseFragment extends Fragment {
     private void deletePassword(String email){
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Passrithm").child("SharePassword").child(email).removeValue();
+    }
+
+    private String emailSplit(String shareEmail) {
+        String[] userEmail = new String[1];
+        String[] array = null;
+
+        if (shareEmail != null) {
+            array = shareEmail.split("@");
+            Log.d("value", array[0]);
+            userEmail[0] = array[0];
+        }
+        return userEmail[0];
     }
 
 
