@@ -171,7 +171,6 @@ public class PasswordBaseFragment extends Fragment {
                     for(int i =0;i<passwordBoxes.size();i++){
                         if (passwordBoxes.get(i).domain.equals(searchText)){
                             filteredList.add(passwordBoxes.get(i));
-
                         }
                         passwordBoxRVAdapter.setItem(filteredList);
                     }
@@ -197,20 +196,19 @@ public class PasswordBaseFragment extends Fragment {
                 .setCancelable(true);
         pwShareDialog = builder.create();
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseAuth user = FirebaseAuth.getInstance();
-
         TextView shareButton = dialogView.findViewById(R.id.dialog_ok_btn);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 EditText editText = dialogView.findViewById(R.id.dialog_email_input_et);
                 String shareEmail = editText.getText().toString();
                 PasswordBox shareBox = PasswordBoxRVAdapter.getItem(position);
                 String userEmail = emailSplit(shareEmail);
                 SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),userEmail);
                 mDatabase.child("Passrithm").child("SharePassword").child(userEmail).setValue(sharePassword);
+                pwShareDialog.dismiss();
             }
         });
         pwShareDialog.show();
