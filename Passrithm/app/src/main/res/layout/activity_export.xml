@@ -21,8 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="50dp"
-        android:paddingBottom="50dp">
+        android:layout_marginBottom="30dp"
+        >
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -32,6 +32,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_txt"
+            android:layout_marginStart="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/image_txt_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/image_icon"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_image"
             android:layout_marginStart="20dp"/>
     </LinearLayout>
 
