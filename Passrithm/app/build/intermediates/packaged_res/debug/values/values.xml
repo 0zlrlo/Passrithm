@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_gray">#F7F6F6</color>
+    <color name="black">#FF000000</color>
+    <color name="insert_box_red">#E6C6BD</color>
+    <color name="one_level_gray">#E1E1E0</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="red">#FF0000</color>
+    <color name="save_box_red">#9A351B</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="two_level_gray">#B2B4B4</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <string name="app_name">Passrithm</string>
+    <string name="ask_big_letter">몇번째 글자를 대문자로\n수정하시겠습니까?</string>
+    <string name="big_letter">대문자 넣기</string>
+    <string name="confirm">확인</string>
+    <string name="default_web_client_id" translatable="false">54213189972-rcvp9ivonq0p4mjsun04dobae9mnv8fa.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">54213189972</string>
+    <string name="google_api_key" translatable="false">AIzaSyDNU2tLiLV0aGkLBIa-r3sykDgU_cUl_y0</string>
+    <string name="google_app_id" translatable="false">1:54213189972:android:9c1f30f39aa2238abb28c1</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDNU2tLiLV0aGkLBIa-r3sykDgU_cUl_y0</string>
+    <string name="google_storage_bucket" translatable="false">passrithm-852e2.appspot.com</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insert_site">사이트 주소를 입력해주세요.</string>
+    <string name="modify_direct">직접 수정하기</string>
+    <string name="password_list">비밀번호 리스트</string>
+    <string name="password_result">결과 : </string>
+    <string name="project_id" translatable="false">passrithm-852e2</string>
+    <string name="save">저장</string>
+    <string name="save_excel">엑셀 파일로 저장</string>
+    <string name="save_image">이미지 파일로 저장</string>
+    <string name="save_txt">txt 파일로 저장</string>
+    <string name="select_letter">영어 문자를 선택해주세요.</string>
+    <string name="share_accept">비밀번호 공유를 수락하시겠습니까?</string>
+    <string name="share_id">비밀번호를 공유하고 싶은 \n 사람의 email를 입력하세요.</string>
+    <string name="test_string">테스트 스트링입니다. 나중에 삭제해주세요.</string>
+    <string name="title_algorithm">알고리즘 리스트</string>
+    <string name="title_mypage">mypage</string>
+    <string name="title_password">비밀번호 리스트</string>
+    <style name="Theme.Passrithm" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        
+        <item name="colorPrimary">#8833ff</item>
+        <item name="colorPrimaryVariant">#8833ff</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        
+    </style>
+</resources>
