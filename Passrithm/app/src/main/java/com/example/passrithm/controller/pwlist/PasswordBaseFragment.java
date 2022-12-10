@@ -132,12 +132,12 @@ public class PasswordBaseFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                passwordBoxes.clear();
                 for (DataSnapshot messageData : snapshot.getChildren()) {
                     PasswordBox example = new PasswordBox(messageData.child("domain").getValue().toString(), messageData.child("password").getValue().toString());
                     passwordBoxes.add(example);
-                    passwordBoxRVAdapter.notifyDataSetChanged();
                 }
+                passwordBoxRVAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -219,9 +219,10 @@ public class PasswordBaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PasswordBox passwordBox = new PasswordBox(domain,password);
-                passwordBoxes.add(passwordBox);
-                passwordBoxRVAdapter.notifyItemInserted(passwordBoxes.size() - 1);
-                saveAlgorithm(passwordBox);
+//                passwordBoxes.add(passwordBox);
+//                passwordBoxRVAdapter.notifyItemInserted(passwordBoxes.size() - 1);
+//                passwordBoxRVAdapter.notifyDataSetChanged();
+                savePassword(passwordBox);
                 pwAcceptDialog.dismiss();
                 deletePassword(checkEmail);
             }
@@ -288,7 +289,7 @@ public class PasswordBaseFragment extends Fragment {
 
 
     }
-    private void saveAlgorithm(PasswordBox passwordBox) {
+    private void savePassword(PasswordBox passwordBox) {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
