@@ -29,6 +29,7 @@ public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRV
     public AlgorithmListRVAdapter(Context requireContext, List<PostSelectedBox> BoxList, OnItemClickListener clickListener) {
         this.BoxList = BoxList;
         this.clickListener = clickListener;
+        Log.d("Passrithm", "algoList : " + BoxList.toString());
     }
 
     public class AlgorithmListViewHolder extends RecyclerView.ViewHolder {
@@ -63,7 +64,6 @@ public class AlgorithmListRVAdapter extends RecyclerView.Adapter<AlgorithmListRV
 
     @Override
     public int getItemCount() {
-        Log.d("boxListSize", String.valueOf(BoxList.size()));
         return BoxList.size();
     }
 }

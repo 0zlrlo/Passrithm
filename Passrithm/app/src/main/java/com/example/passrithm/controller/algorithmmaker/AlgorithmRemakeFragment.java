@@ -125,6 +125,7 @@ public class AlgorithmRemakeFragment extends Fragment {
                 EditText editText = siteInputView.findViewById(R.id.algomake_site_input_et);
                 siteDomain = editText.getText().toString();
                 if (!siteDomain.equals("")) {
+                    Log.d("Passrithm", "algoRemaker : " + siteDomain);
                     siteInputDialog.dismiss();
                 }
             }

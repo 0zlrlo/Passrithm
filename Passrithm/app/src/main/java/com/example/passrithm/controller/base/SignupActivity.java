@@ -2,6 +2,7 @@ package com.example.passrithm.controller.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +54,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(SignupActivity.this, "비밀번호가 일치합니다", Toast.LENGTH_SHORT).show();
+                Log.d("Passrithm","match password");
             }
         });
 
@@ -82,6 +84,7 @@ public class SignupActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), PinSettingActivity.class);
                                 intent.putExtra("state", "false");
                                 startActivity(intent);
+                                Log.d("Passrithm","sign up");
                             } else {
                                 //if (task.getException().toString() != null) {
                                 Toast.makeText(SignupActivity.this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show();
