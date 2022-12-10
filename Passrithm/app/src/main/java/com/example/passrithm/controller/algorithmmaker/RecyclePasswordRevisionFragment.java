@@ -58,6 +58,7 @@ public class RecyclePasswordRevisionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         resultBox.setText(algorithmRecyclerActivity.result);
+        Log.d("Passrithm", "revision : " + algorithmRecyclerActivity.result);
     }
 
     @Nullable
@@ -89,6 +90,7 @@ public class RecyclePasswordRevisionFragment extends Fragment {
                     stringBuilder.setCharAt(index, bigLetter);
                     algorithmRecyclerActivity.result = stringBuilder.toString();
                     resultBox.setText(algorithmRecyclerActivity.result);
+                    Log.d("Passrithm", "revision bigLetter: " + algorithmRecyclerActivity.result);
 
                     alert.setVisibility(View.INVISIBLE);
                 } catch (NumberFormatException e) {
@@ -119,6 +121,7 @@ public class RecyclePasswordRevisionFragment extends Fragment {
                 InputMethodManager imm = (InputMethodManager) algorithmRecyclerActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(algorithmRecyclerActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 confirm.setVisibility(View.GONE);
+                Log.d("Passrithm", "revision confirm: " + algorithmRecyclerActivity.result);
 
                 algorithmRecyclerActivity.result = resultBox.getText().toString();
                 resultBox.clearFocus();

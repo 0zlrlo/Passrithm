@@ -62,6 +62,7 @@ public class PasswordRevisionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         resultBox.setText(algorithmGeneratorActivity.result);
+        Log.d("Passrithm", "revision : " + algorithmGeneratorActivity.result);
     }
 
     @Nullable
@@ -93,6 +94,7 @@ public class PasswordRevisionFragment extends Fragment {
                     stringBuilder.setCharAt(index, bigLetter);
                     algorithmGeneratorActivity.result = stringBuilder.toString();
                     resultBox.setText(algorithmGeneratorActivity.result);
+                    Log.d("Passrithm", "revision bigLetter: " + algorithmGeneratorActivity.result);
 
                     alert.setVisibility(View.INVISIBLE);
                 } catch (NumberFormatException e) {
@@ -123,6 +125,7 @@ public class PasswordRevisionFragment extends Fragment {
                 InputMethodManager imm = (InputMethodManager) algorithmGeneratorActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(algorithmGeneratorActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 confirm.setVisibility(View.GONE);
+                Log.d("Passrithm", "revision confirm: " + algorithmGeneratorActivity.result);
 
                 algorithmGeneratorActivity.result = resultBox.getText().toString();
                 resultBox.clearFocus();
