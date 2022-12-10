@@ -29,6 +29,6 @@ public class SelectedBox implements Serializable {
 
     @Override
     public String toString() {
-        return name + "\n";
+        return name;
     }
 }

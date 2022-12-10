@@ -23,9 +23,6 @@ public class PostSelectedBox {
 
     @Override
     public String toString(){
-        String result = "";
-        result += name + "\n";
-        result += selectedBoxes + "\n";
-        return result;
+        return name + "\n";
     }
 }
