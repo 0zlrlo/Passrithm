@@ -43,7 +43,13 @@
         <activity android:name=".controller.base.LoginActivity" />
         <activity android:name=".controller.base.FindpasswordActivity" />
         <activity android:name=".controller.base.SignupActivity" />
-        <activity android:name=".controller.MainActivity" />
+        <activity android:name=".controller.MainActivity"
+            android:launchMode="singleTop"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".controller.pwlist.ExportActivity"/>
         <activity android:name=".controller.AlgorithmRecyclerActivity"/>
     </application>

@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
        // Log.d("checking",myData);
         if(myData!=null){
             FragmentChange(myData);
-            Log.d("checking",myData);
-        }else FragmentChange("password_lock");
+        } else FragmentChange("password_lock");
        // FragmentChange("password_list");
         SharedPreferences spf = getSharedPreferences("Login", Activity.MODE_PRIVATE);
         Log.d("login", spf.getString("loginEmail", ""));
