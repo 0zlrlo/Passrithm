@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 rcView.setVisibility(View.GONE);
 
 
+
                 break;
             case "password_list":
                 transaction.hide(passwordLockFragment);

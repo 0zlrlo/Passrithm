@@ -137,6 +137,7 @@ public class PasswordBaseFragment extends Fragment {
                 passwordBoxes.clear();
                 for (DataSnapshot messageData : snapshot.getChildren()) {
                     PasswordBox example = new PasswordBox(messageData.child("domain").getValue().toString(), messageData.child("password").getValue().toString());
+                    Log.d("Passrithm","PasswordList : "+example.toString());
                     passwordBoxes.add(example);
                 }
                 passwordBoxRVAdapter.notifyDataSetChanged();
@@ -204,10 +205,13 @@ public class PasswordBaseFragment extends Fragment {
                 String userEmail = emailSplit(shareEmail);
                 SharePassword sharePassword = new SharePassword(shareBox.getPassword(),shareBox.getDomain(),userEmail);
                 mDatabase.child("Passrithm").child("SharePassword").child(userEmail).setValue(sharePassword);
+                Log.d("Passrithm","공유할 비빌번호 : "+sharePassword);
                 pwShareDialog.dismiss();
             }
         });
+
         pwShareDialog.show();
+        Log.d("Passrithm","dialog 생성");
     }
 
     void showAcceptDialog(String domain, String password, String checkEmail){
@@ -225,9 +229,7 @@ public class PasswordBaseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PasswordBox passwordBox = new PasswordBox(domain,password);
-//                passwordBoxes.add(passwordBox);
-//                passwordBoxRVAdapter.notifyItemInserted(passwordBoxes.size() - 1);
-//                passwordBoxRVAdapter.notifyDataSetChanged();
+
                 savePassword(passwordBox);
                 pwAcceptDialog.dismiss();
                 deletePassword(checkEmail);
@@ -272,6 +274,9 @@ public class PasswordBaseFragment extends Fragment {
                             String domain = snapshot.child("domain").getValue(String.class);
                             String password = snapshot.child("password").getValue(String.class);
                             String checkEmail = snapshot.child("email").getValue(String.class);
+                            Log.d("Passrithm","PasswordBox.doamin :"+domain);
+                            Log.d("Passrithm","PasswordBox.password :"+password);
+                            Log.d("Passrithm","PasswordBox.email :"+checkEmail);
                             if(userEmail[0].equals(checkEmail)) {
                                 showAcceptDialog(domain, password, checkEmail);
                             }

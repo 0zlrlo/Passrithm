@@ -212,6 +212,7 @@ public class PinSettingActivity extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(strPin!=null)
             mDatabaseRef.child("UserAccount").child(user.getUid()).child("pinId").setValue(strPin);
+            Log.d("Passrithm","Pinsetting : "+inputPassword());
         }
         public void unlock(){
 

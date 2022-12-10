@@ -2,6 +2,7 @@ package com.example.passrithm.controller.pwlist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class ExportActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
                 intent.putExtra(Intent.EXTRA_TEXT, getTextString(passwordBoxes));
+                Log.d("Passrithm", "passwordBoxes : " + passwordBoxes.toString());
                 intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, "앱을 선택해주세요."));
             }
