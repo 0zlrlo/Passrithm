@@ -3,12 +3,14 @@ package com.example.passrithm.controller.pwlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.passrithm.R;
+import com.example.passrithm.controller.base.LoginActivity;
 import com.example.passrithm.databinding.ActivityExportBinding;
 import com.example.passrithm.databinding.ActivityMainBinding;
 
@@ -33,6 +35,18 @@ public class ExportActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, getTextString(passwordBoxes));
                 intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, "앱을 선택해주세요."));
+            }
+        });
+
+        binding.imageTxtLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();
+                ExportImgFragment exportImgFragment = new ExportImgFragment(passwordBoxes);
+                transaction.add(R.id.export_frm, exportImgFragment);
+                transaction.commit();
+
+                Toast.makeText(ExportActivity.this, "화면을 캡쳐해서 공유해주세요!", Toast.LENGTH_SHORT).show();
             }
         });
     }

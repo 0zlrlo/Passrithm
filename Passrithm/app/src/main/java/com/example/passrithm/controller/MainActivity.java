@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         transaction = getSupportFragmentManager().beginTransaction();
         final RecyclerView rcView = (RecyclerView)findViewById(R.id.password_list_rc);
 
-
-
         PasswordLockFragment passwordLockFragment = new PasswordLockFragment();
 
         switch(fragment){
