@@ -230,7 +230,7 @@ public class PinSettingActivity extends AppCompatActivity {
                     Log.d("uid_u",user.getUid());
                     if(strPin!=null){
                         if(strPin.equals(pinNum)){
-                            Toast.makeText(PinSettingActivity.this, "잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(PinSettingActivity.this, "잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("setting", "password_list");
                             intent.putExtra("state","true");

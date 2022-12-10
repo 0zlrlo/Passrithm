@@ -104,11 +104,7 @@ public class PasswordBaseFragment extends Fragment {
                 // Do something with the result...
             }
         });
-
-
         waitDialog();
-
-
 
         //exprot 부분
         exportButton = view.findViewById(R.id.export);
@@ -209,6 +205,9 @@ public class PasswordBaseFragment extends Fragment {
     }
 
     void showAcceptDialog(String domain, String password, String checkEmail){
+        if (mainActivity.isFinishing()) {
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         View dialogView = LayoutInflater.from(mainActivity).inflate(R.layout.dialog_password_accept, null);
         builder.setView(dialogView)
@@ -221,7 +220,7 @@ public class PasswordBaseFragment extends Fragment {
             public void onClick(View v) {
                 PasswordBox passwordBox = new PasswordBox(domain,password);
                 passwordBoxes.add(passwordBox);
-                passwordBoxRVAdapter.notifyDataSetChanged();
+                passwordBoxRVAdapter.notifyItemInserted(passwordBoxes.size() - 1);
                 saveAlgorithm(passwordBox);
                 pwAcceptDialog.dismiss();
                 deletePassword(checkEmail);
