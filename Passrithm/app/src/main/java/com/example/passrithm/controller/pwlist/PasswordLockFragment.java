@@ -43,9 +43,9 @@ public class PasswordLockFragment extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
 
-                Bundle result = new Bundle();
+               /* Bundle result = new Bundle();
                 result.putString("bundleKey", "result");
-                getParentFragmentManager().setFragmentResult("requestKey", result);
+                getParentFragmentManager().setFragmentResult("requestKey", result);*/
             }
         });
         return view;

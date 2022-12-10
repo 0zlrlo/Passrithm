@@ -207,7 +207,7 @@ public class PinSettingActivity extends AppCompatActivity {
             return password1+password2+password3+password4;
         }
         public void setting(){
-            Log.d("seon",inputPassword());
+
             String strPin = inputPassword();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(strPin!=null)
@@ -225,10 +225,7 @@ public class PinSettingActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                    String pinNum= snapshot.child("Passrithm").child("UserAccount").child(user.getUid()).child("pinId").getValue(String.class);
-                   // String pinNum=.child(user.getUid()).child("pinId").getValue(String.class);
-                    //Log.d("uid_u",user.getUid());
-                    Log.d("input1",pinNum);
-                    Log.d("uid_u",user.getUid());
+
                     if(strPin!=null){
                         if(strPin.equals(pinNum)){
 //                            Toast.makeText(PinSettingActivity.this, "잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();

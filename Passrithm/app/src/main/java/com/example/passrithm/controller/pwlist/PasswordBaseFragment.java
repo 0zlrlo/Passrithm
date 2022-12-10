@@ -102,7 +102,6 @@ public class PasswordBaseFragment extends Fragment {
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 String result = bundle.getString("bundleKey");
-                Log.d("value",result);
                 // Do something with the result...
             }
         });
@@ -259,13 +258,12 @@ public class PasswordBaseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //
 
-                Log.d("value", snapshot.getValue(String.class));
+
                 String email = snapshot.getValue(String.class);
                 //String checkEmail = snapshot.getValue(String.class);
                 String[] array=null;
                 if(email != null){
-                    array = email.split("@");
-                    Log.d("value",array[0]);
+                    array = email.split("@");;
                     userEmail[0] = array[0];
                     // databaseReference.child("Passrithm").child("SharePassword").child(userEmail[0]).addValueEventListener(mValueEventListener);
                     ValueEventListener mValueEventListener = new ValueEventListener() {
@@ -274,11 +272,12 @@ public class PasswordBaseFragment extends Fragment {
                             String domain = snapshot.child("domain").getValue(String.class);
                             String password = snapshot.child("password").getValue(String.class);
                             String checkEmail = snapshot.child("email").getValue(String.class);
-                            Log.d("Passrithm","PasswordBox.doamin :"+domain);
-                            Log.d("Passrithm","PasswordBox.password :"+password);
-                            Log.d("Passrithm","PasswordBox.email :"+checkEmail);
+
                             if(userEmail[0].equals(checkEmail)) {
                                 showAcceptDialog(domain, password, checkEmail);
+                                Log.d("Passrithm","PasswordBox.doamin :"+domain);
+                                Log.d("Passrithm","PasswordBox.password :"+password);
+                                Log.d("Passrithm","PasswordBox.email :"+checkEmail);
                             }
                         }
                         @Override
@@ -319,7 +318,6 @@ public class PasswordBaseFragment extends Fragment {
 
         if (shareEmail != null) {
             array = shareEmail.split("@");
-            Log.d("value", array[0]);
             userEmail[0] = array[0];
         }
         return userEmail[0];
