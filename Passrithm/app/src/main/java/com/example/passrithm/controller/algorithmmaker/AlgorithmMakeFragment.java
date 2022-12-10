@@ -97,7 +97,7 @@ public class AlgorithmMakeFragment extends Fragment {
         AlgorithmBoxRVAdapter algorithmBoxRVAdapter = new AlgorithmBoxRVAdapter(requireContext(), algorithmBoxes, new AlgorithmBoxRVAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                Log.d("click", String.valueOf(position));
+                Log.d("Passrithm", "algoMaker : " + String.valueOf(position));
                 showPopUp(position);
             }
         });
@@ -121,6 +121,7 @@ public class AlgorithmMakeFragment extends Fragment {
                 EditText editText = siteInputView.findViewById(R.id.algomake_site_input_et);
                 siteDomain = editText.getText().toString();
                 if (!siteDomain.equals("")) {
+                    Log.d("Passrithm", "algoMaker : " + siteDomain);
                     siteInputDialog.dismiss();
                 }
             }
@@ -260,7 +261,7 @@ public class AlgorithmMakeFragment extends Fragment {
         final CharSequence[] oItems = {"!", "@", "#", "$", "?", "%", "^", "&", "*"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(algorithmGeneratorActivity, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
-        builder.setTitle("색상을 선택하세요")
+        builder.setTitle("특수문자를 선택하세요")
                 .setItems(oItems, new DialogInterface.OnClickListener()
                 {
                     @Override

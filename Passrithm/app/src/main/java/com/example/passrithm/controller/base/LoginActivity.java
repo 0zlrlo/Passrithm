@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("loginEmail", loginEmail); // 파일에 이메일 정보 입력
                     editor.putString("loginPw", loginPw); // 파일에 이메일 정보 입력
                     editor.commit();
+                    Log.d("Passrithm","login");
                 } else {
                     pref = getSharedPreferences("Login", Activity.MODE_PRIVATE);
                     editor = pref.edit();
